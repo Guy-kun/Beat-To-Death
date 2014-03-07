@@ -10,6 +10,7 @@ Thumbs.db
 *.pdb
 *.aps
 *.vcproj.*.user
+*.vcxproj.user
 *.vspscc
 *_i.c
 *.i
