@@ -5,19 +5,22 @@
 
 USING_NS_CC;
 
+enum BoxType{
+	Player,Dead,Static
+};
+
 class ABox : public cocos2d::Node
 {
 public:
-	ABox();
+	ABox(BoxType t);
 	~ABox();
 
 	void visit();
-
-protected:
 	
-
 private:
-
+	BoxType type;
+	Sprite* sprite;
+	//TODO Body
 };
 
 #endif 

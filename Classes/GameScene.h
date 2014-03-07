@@ -1,7 +1,8 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef __GAME_SCENE_H__
+#define __GAME_SCENE_H__
 
 #include "cocos2d.h"
+#include "BoxLayer.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -17,6 +18,9 @@ public:
     
     // implement the "static create()" method manually
 	CREATE_FUNC(GameScene);
+
+private:
+	BoxLayer* boxLayer;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
