@@ -1,5 +1,5 @@
-#ifndef __DS_NPC__
-#define __DS_NPC__
+#ifndef __ABOX_H__
+#define __ABOX_H__
 
 #include "cocos2d.h"
 
