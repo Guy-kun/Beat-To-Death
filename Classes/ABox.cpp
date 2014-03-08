@@ -79,4 +79,7 @@ void ABox::kill() {
 ABox::~ABox(){
 	myWorld->DestroyBody(boxBody);
 	removeChild(sprite);
+	if (oldSprite) {
+		removeChild(oldSprite);
+	}
 }

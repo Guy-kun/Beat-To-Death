@@ -30,6 +30,7 @@ private:
 	std::vector<ABox*> boxes;
 	b2World* _world;
 	b2Body* _groundBody;
+	std::vector<ABox*> toDelete;
 };
 
 #endif 

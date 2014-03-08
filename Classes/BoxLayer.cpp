@@ -43,7 +43,14 @@ void BoxLayer::initFixedBoxes(std::vector<Point> points){
 }
 void BoxLayer::update(float delta){
 	_world->Step(delta, 8, 1);
-	_world->ClearForces();
+
+	if (!toDelete.empty()) {
+		for (int i = toDelete.size() - 1; i >= 0; i--) {
+			removeChild(toDelete[i]);
+			toDelete[i]->release();
+		}
+		toDelete.clear();
+	}
 }
 
 void BoxLayer::spawnPlayer() {
@@ -56,14 +63,13 @@ void BoxLayer::spawnPlayer() {
 void BoxLayer::killPlayer(bool newBody) {
 	for (int i = boxes.size() - 1; i >= 0; i--) {
 		ABox* player = boxes[i];
-		if (newBody) {
-			if (player->getType() == Player) {
+		if (player->getType() == Player) {
+			if (newBody) {
 				player->kill();
+			} else {
+				toDelete.push_back(player);
+				boxes.erase(boxes.begin() + i);
 			}
-		}
-		else {
-			boxes.erase(boxes.begin()+i);
-			removeChild(player);
 		}
 	}
 	spawnPlayer();
