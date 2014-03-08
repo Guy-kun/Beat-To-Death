@@ -22,7 +22,7 @@ public:
 	void update(float delta);
 	void movePlayer(InputDirection direction);
 	void spawnPlayer();
-	void killPlayer();
+	void killPlayer(bool newBody);
 
 	static cocos2d::Layer* layer();
 

@@ -20,6 +20,7 @@ public:
 	void setPosition(const Point &point) override;
 
 	void kill();
+	void destroyBody(b2World* world);
 
 	CCSprite* getSprite() { return sprite; }
 	BoxType getType() { return type; }
@@ -32,6 +33,7 @@ private:
 	b2Body* boxBody;
 	b2PolygonShape boxShape;
 	b2FixtureDef boxShapeDef;
+	b2World* myWorld;
 };
 
 #endif 
