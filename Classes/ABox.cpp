@@ -22,7 +22,7 @@ ABox::ABox(BoxType t, b2World* world){
 		boxBody = world->CreateBody(&boxBodyDef);
 
 		boxShape.SetAsBox(getSprite()->getContentSize().width / PTM_RATIO / 2,
-			getSprite()->getContentSize().height / PTM_RATIO / 2); // need to divide by 2 for some reason
+						  getSprite()->getContentSize().height / PTM_RATIO / 2); // need to divide by 2 for some reason
 
 		boxShapeDef.shape = &boxShape;
 		boxShapeDef.density = 10.0f;
@@ -31,10 +31,14 @@ ABox::ABox(BoxType t, b2World* world){
 		boxBody->CreateFixture(&boxShapeDef);
 		boxBody->SetFixedRotation(true);
 
+		// Create sensor thing
+		boxShape.SetAsBox(getSprite()->getContentSize().width / PTM_RATIO / 2, 0.3 / PTM_RATIO / 2, b2Vec2(0, -2 / PTM_RATIO / 2), 0);
+		boxShapeDef.isSensor = true;
+		boxShapeDef.userData = nullptr;
+		b2Fixture* footSensorFixture = boxBody->CreateFixture(&boxShapeDef);
 	}
 	else
 	{
-
 		if (type == Static) {
 			sprite->initWithFile("inactive.png");
 			boxBodyDef.type = b2_staticBody;
@@ -52,7 +56,6 @@ ABox::ABox(BoxType t, b2World* world){
 			sprite->initWithFile("dead.png");
 			boxBodyDef.type = b2_staticBody;
 		}
-
 
 		boxBodyDef.userData = this;
 

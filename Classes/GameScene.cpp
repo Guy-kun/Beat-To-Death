@@ -83,7 +83,7 @@ void GameScene::update(float delta){
 			{
 				currentBPM = p.second;
 				FLASH_BEATCOUNT = 2.0f / (currentBPM / 180);
-				DEATH_BEATCOUNT = FLASH_BEATCOUNT * 6;
+				DEATH_BEATCOUNT = FLASH_BEATCOUNT * 6000;
 				break;
 			}
 		}

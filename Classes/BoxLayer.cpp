@@ -17,8 +17,8 @@ bool BoxLayer::init()
 	_world->SetContinuousPhysics(false);
 	_world->SetContactListener(this);
 
-	/* Ground stuff
-	b2BodyDef groundBodyDef;
+	// Ground stuff
+	/*b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0, 0);
 
 	_groundBody = _world->CreateBody(&groundBodyDef);
@@ -54,12 +54,6 @@ void BoxLayer::update(float delta){
 
 	if (playerPosition.y < 0) {
 		killPlayer(false);
-	}
-	else if ((playerPosition.y < goalPosition.y+61) &&
-			 (playerPosition.y > goalPosition.y+51) &&
-		     (playerPosition.x > goalPosition.x-10) &&
-			 (playerPosition.x < goalPosition.x+61)) {
-		resetBodies();
 	}
 
 	if (!toDelete.empty()) {
@@ -158,11 +152,11 @@ void BoxLayer::BeginContact(b2Contact *contact) {
 	for (int i = 0; i < 2; i++)
 	{
 
-		if (box1->getType() == Player&& box2->getType() == Goal)
+		if (box1->getType() == Player && box2->getType() == Goal)
 		{
-			//Goal touched
+			resetBodies();
 		}
-		else if (box1->getType() == Player&& box2->getType() == Kill)
+		else if (box1->getType() == Player && box2->getType() == Kill)
 		{
 
 		}
