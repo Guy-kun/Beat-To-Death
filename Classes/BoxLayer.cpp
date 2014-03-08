@@ -10,11 +10,11 @@ bool BoxLayer::init()
 
 	// box2d shit
 	b2Vec2 gravity;
-	gravity.Set(0.0f, -10.0f);
+	gravity.Set(0.0f, -30.0f);
 	boolean doSleep = true;
 	_world = new b2World(gravity);
 	_world->SetAllowSleeping(true);
-
+	_world->SetContinuousPhysics(false);
 	/*
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0, 0);
@@ -106,7 +106,7 @@ void BoxLayer::movePlayer(InputDirection direction){
 			b2Vec2 vel = player->getBoxBody()->GetLinearVelocity();
 			if (direction == UP) {
 				if (abs(vel.y) < 0.2) {
-					vel.y = 10;//upwards - don't change x velocity
+					vel.y = 15;//upwards - don't change x velocity
 					player->getBoxBody()->SetLinearVelocity(vel);
 				}
 			}
