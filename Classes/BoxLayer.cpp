@@ -44,6 +44,15 @@ void BoxLayer::initFixedBoxes(std::vector<Point> points){
 void BoxLayer::update(float delta){
 	_world->Step(delta, 8, 1);
 
+	for (int i = boxes.size() - 1; i >= 0; i--) {
+		ABox* player = boxes[i];
+		if (player->getType() == Player) {
+			if (player->getPosition().y < 0) {
+				killPlayer(false);
+			}
+		}
+	}
+
 	if (!toDelete.empty()) {
 		for (int i = toDelete.size() - 1; i >= 0; i--) {
 			removeChild(toDelete[i]);
@@ -95,7 +104,7 @@ void BoxLayer::movePlayer(InputDirection direction){
 				player->getBoxBody()->SetLinearVelocity(vel);
 			}
 			else if (direction == DOWN) {
-				killPlayer(false);
+				killPlayer(true);
 			}
 		}
 	}

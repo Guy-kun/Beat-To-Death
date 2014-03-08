@@ -70,6 +70,8 @@ void ABox::kill() {
 	sprite->initWithFile("dead.png");
 	addChild(sprite);
 
+	type = Dead;
+
 	CCFadeOut* fade = CCFadeOut::create(0.2f);
 	oldSprite->runAction(fade);
 
