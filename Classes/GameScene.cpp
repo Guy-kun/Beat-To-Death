@@ -38,7 +38,7 @@ bool GameScene::init()
 
 
 	//Generate points for level 0
-	generateLevelPoints(0);
+	generateLevelPoints(1);
 
 	
 	pulseLayer = PulseLayer::create();
@@ -46,7 +46,10 @@ bool GameScene::init()
 	boxLayer = BoxLayer::create();
 	addChild(boxLayer);
 
+
 	scheduleUpdate();
+
+	boxLayer->initFixedBoxes(levelPoints);
     return true;
 }
 

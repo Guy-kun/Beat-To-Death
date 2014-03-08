@@ -9,34 +9,44 @@ ABox::ABox(BoxType t, b2World* world){
 
 	//TODO vary based on type
 	sprite = Sprite::create();
-	sprite->initWithFile("CloseNormal.png");
+	if (type == Static) {
+		sprite->initWithFile("inactive.png");
+		boxBodyDef.type = b2_staticBody;
+	}
+	else if (type == Player) {
+		sprite->initWithFile("player.png");
+		boxBodyDef.type = b2_dynamicBody;
+	}
+	else if (type == Dead) {
+		sprite->initWithFile("dead.png");
+		boxBodyDef.type = b2_staticBody;
+	}
 	addChild(sprite);
 
-	sampleBoxBodyDef.type = b2_dynamicBody;
-	sampleBoxBodyDef.userData = this;
-
-	sampleBoxBody = world->CreateBody(&sampleBoxBodyDef);
 	
-	sampleBoxShape.SetAsBox(getSprite()->getContentSize().width / PTM_RATIO,
-		getSprite()->getContentSize().height / PTM_RATIO);
+	boxBodyDef.userData = this;
 
+	boxBody = world->CreateBody(&boxBodyDef);
 	
-	sampleBoxShapeDef.shape = &sampleBoxShape;
-	sampleBoxShapeDef.density = 10.0f;
-	sampleBoxShapeDef.friction = 0.4f;
-	sampleBoxShapeDef.restitution = 0.1f;
-	sampleBoxBody->CreateFixture(&sampleBoxShapeDef);
+	boxShape.SetAsBox(getSprite()->getContentSize().width / PTM_RATIO,
+					  getSprite()->getContentSize().height / PTM_RATIO);
+
+	boxShapeDef.shape = &boxShape;
+	boxShapeDef.density = 10.0f;
+	boxShapeDef.friction = 0.4f;
+	boxShapeDef.restitution = 0.1f;
+	boxBody->CreateFixture(&boxShapeDef);
 
 }
 
 void ABox::setPosition(const Point &point){
 	Node::setPosition(point);
-	sampleBoxBody->SetTransform(b2Vec2(point.x / PTM_RATIO, point.y / PTM_RATIO),0);
+	boxBody->SetTransform(b2Vec2(point.x / PTM_RATIO, point.y / PTM_RATIO),0);
 }
 
 
 void ABox::visit(){
-	Node::setPosition(ccp(sampleBoxBody->GetPosition().x*PTM_RATIO, sampleBoxBody->GetPosition().y*PTM_RATIO));
+	Node::setPosition(ccp(boxBody->GetPosition().x*PTM_RATIO, boxBody->GetPosition().y*PTM_RATIO));
 
 	sprite->setPosition(getPosition());
 	sprite->setAnchorPoint(getAnchorPoint());
