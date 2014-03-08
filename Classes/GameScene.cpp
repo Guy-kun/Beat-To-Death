@@ -36,8 +36,8 @@ bool GameScene::init()
 	//Play music
 	std::stringstream ss;
 	ss << simfileDirectory.getCString() << currentSimfile->getMusicFileName().getCString();
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.1);
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(ss.str().c_str());
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(ss.str().c_str());
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.3f);
 
 
 	//Generate points for level 0
@@ -117,7 +117,9 @@ void GameScene::generateLevelPoints(){
 	srand(hash);
 
 	for (int i = 0; i < rand() % 8; i++){
+		int a = rand() % 3;
 
+		levelPoints.push_back(std::pair<Point, BoxType>(ccp(200+ (rand()%700), rand()%450), (a==0?Kill:Static)));
 	}
 
 	levelPoints.push_back(std::pair<Point, BoxType>(ccp(100, 100),Static));

@@ -1,11 +1,12 @@
 #include "BoxLayer.h"
-
+#include "B2DebugDrawLayer.h"
 USING_NS_CC;
 
 #define PTM_RATIO 30
 
 bool BoxLayer::init()
 {
+	killPlayerNextLoop = false;
 	Size screenSize = Director::getInstance()->getWinSize();
 
 	// box2d shit
@@ -16,9 +17,9 @@ bool BoxLayer::init()
 	_world->SetAllowSleeping(true);
 	_world->SetContinuousPhysics(false);
 	_world->SetContactListener(this);
-
-	// Ground stuff
-	/*b2BodyDef groundBodyDef;
+	addChild(B2DebugDrawLayer::create(_world, PTM_RATIO), 9999);
+	/* Ground stuff
+	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0, 0);
 
 	_groundBody = _world->CreateBody(&groundBodyDef);
@@ -51,6 +52,12 @@ void BoxLayer::update(float delta){
 	ABox* player = getPlayer();
 	Point playerPosition = player->getPosition();
 	Point goalPosition = getGoal()->getPosition();
+
+	if (killPlayerNextLoop)
+	{
+		killPlayer(true);
+		killPlayerNextLoop = false;
+	}
 
 	if (playerPosition.y < 0) {
 		killPlayer(false);
@@ -158,7 +165,7 @@ void BoxLayer::BeginContact(b2Contact *contact) {
 		}
 		else if (box1->getType() == Player && box2->getType() == Kill)
 		{
-
+			killPlayerNextLoop = true;
 		}
 		ABox* box3 = box2;
 		box2 = box1;
