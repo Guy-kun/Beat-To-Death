@@ -15,7 +15,7 @@ bool BoxLayer::init()
 	_world = new b2World(gravity);
 	_world->SetAllowSleeping(true);
 
-	/*
+	/* Ground stuff
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0, 0);
 
@@ -52,10 +52,11 @@ void BoxLayer::update(float delta){
 	if (playerPosition.y < 0) {
 		killPlayer(false);
 	}
-	else if ((playerPosition.y < goalPosition.y + 50) &&
+	else if ((playerPosition.y < goalPosition.y+50) &&
 			 (playerPosition.y > goalPosition.y) &&
-		     (playerPosition.x > goalPosition.x)) {
-		// You win!
+		     (playerPosition.x > goalPosition.x) &&
+			 (playerPosition.x < goalPosition.x+50)) {
+		resetBodies();
 	}
 
 	if (!toDelete.empty()) {
