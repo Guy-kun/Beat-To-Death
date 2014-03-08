@@ -20,6 +20,7 @@ public:
 
 	void initFixedBoxes(std::vector<Point> points);
 	void update(float delta);
+	ABox* getPlayer();
 	void movePlayer(InputDirection direction);
 	void spawnPlayer();
 	void killPlayer(bool newBody);

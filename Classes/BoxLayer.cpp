@@ -41,16 +41,12 @@ void BoxLayer::initFixedBoxes(std::vector<Point> points){
 		addChild(box);
 	}
 }
+
 void BoxLayer::update(float delta){
 	_world->Step(delta, 8, 1);
 
-	for (int i = boxes.size() - 1; i >= 0; i--) {
-		ABox* player = boxes[i];
-		if (player->getType() == Player) {
-			if (player->getPosition().y < 0) {
-				killPlayer(false);
-			}
-		}
+	if (getPlayer()->getPosition().y < 0) {
+		killPlayer(false);
 	}
 
 	if (!toDelete.empty()) {
@@ -59,6 +55,14 @@ void BoxLayer::update(float delta){
 			toDelete[i]->release();
 		}
 		toDelete.clear();
+	}
+}
+
+ABox* BoxLayer::getPlayer() {
+	for (int i = boxes.size()-1; i >= 0; i--) {
+		if (boxes[i]->getType() == Player) {
+			return boxes[i];
+		}
 	}
 }
 
@@ -85,28 +89,24 @@ void BoxLayer::killPlayer(bool newBody) {
 }
 
 void BoxLayer::movePlayer(InputDirection direction){
-	for (int i = boxes.size()-1; i >= 0; i--) {
-		ABox* player = boxes[i];
-		if (player->getType() == Player) {
-			b2Vec2 vel = player->getBoxBody()->GetLinearVelocity();
-			if (direction == UP) {
-				if (abs(vel.y) < 0.2) {
-					vel.y = 10;//upwards - don't change x velocity
-					player->getBoxBody()->SetLinearVelocity(vel);
-				}
-			}
-			else if (direction == LEFT) {
-				vel.x = -5;
-				player->getBoxBody()->SetLinearVelocity(vel);
-			}
-			else if (direction == RIGHT) {
-				vel.x = 5;
-				player->getBoxBody()->SetLinearVelocity(vel);
-			}
-			else if (direction == DOWN) {
-				killPlayer(true);
-			}
+	ABox* player = getPlayer();
+	b2Vec2 vel = player->getBoxBody()->GetLinearVelocity();
+	if (direction == UP) {
+		if (abs(vel.y) < 0.2) {
+			vel.y = 10;//upwards - don't change x velocity
+			player->getBoxBody()->SetLinearVelocity(vel);
 		}
+	}
+	else if (direction == LEFT) {
+		vel.x = -5;
+		player->getBoxBody()->SetLinearVelocity(vel);
+	}
+	else if (direction == RIGHT) {
+		vel.x = 5;
+		player->getBoxBody()->SetLinearVelocity(vel);
+	}
+	else if (direction == DOWN) {
+		killPlayer(true);
 	}
 }
 
