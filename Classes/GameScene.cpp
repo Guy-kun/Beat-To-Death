@@ -35,7 +35,7 @@ bool GameScene::init()
 	std::stringstream ss;
 	ss << simfileDirectory.getCString() << currentSimfile->getMusicFileName().getCString();
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.5f);
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(ss.str().c_str());
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(ss.str().c_str());
 
 
 	//Generate points for level 0

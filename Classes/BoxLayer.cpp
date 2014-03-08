@@ -29,7 +29,6 @@ bool BoxLayer::init()
 	spawnPlayer();
 	
 	scheduleUpdate();
-
 	return true;
 }
 
