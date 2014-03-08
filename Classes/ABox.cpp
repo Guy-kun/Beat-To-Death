@@ -1,10 +1,11 @@
 #include "ABox.h"
 
 USING_NS_CC;
-#define PTM_RATIO 32
+#define PTM_RATIO 30
 
 
 ABox::ABox(BoxType t, b2World* world){
+	myWorld = world;
 	type = t;
 	oldSprite = nullptr;
 
@@ -33,7 +34,7 @@ ABox::ABox(BoxType t, b2World* world){
 					  getSprite()->getContentSize().height / PTM_RATIO / 2); // need to divide by 2 for some reason
 
 	boxShapeDef.shape = &boxShape;
-	boxShapeDef.density = 50.0f;
+	boxShapeDef.density = 10.0f;
 	boxShapeDef.friction = 1.0f;
 	boxShapeDef.restitution = 0.0f;
 	boxBody->CreateFixture(&boxShapeDef);
@@ -69,6 +70,8 @@ void ABox::kill() {
 	sprite->initWithFile("dead.png");
 	addChild(sprite);
 
+	type = Dead;
+
 	CCFadeOut* fade = CCFadeOut::create(0.2f);
 	oldSprite->runAction(fade);
 
@@ -76,5 +79,9 @@ void ABox::kill() {
 }
 
 ABox::~ABox(){
-	//TODO: clear up body etc
+	myWorld->DestroyBody(boxBody);
+	removeChild(sprite);
+	if (oldSprite) {
+		removeChild(oldSprite);
+	}
 }

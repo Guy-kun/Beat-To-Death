@@ -24,7 +24,7 @@ public:
 	void update(float delta);
 	void movePlayer(InputDirection direction);
 	void spawnPlayer();
-	void killPlayer();
+	void killPlayer(bool newBody);
 
 	static cocos2d::Layer* layer();
 
@@ -32,6 +32,7 @@ private:
 	std::vector<ABox*> boxes;
 	b2World* _world;
 	b2Body* _groundBody;
+	std::vector<ABox*> toDelete;
 };
 
 #endif 
