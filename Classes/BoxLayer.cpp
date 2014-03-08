@@ -45,7 +45,7 @@ void BoxLayer::update(float delta){
 
 void BoxLayer::spawnPlayer() {
 	ABox* player = new ABox(Player, _world);
-	player->setPosition(ccp(200, 400));
+	player->setPosition(ccp(100, 150));
 	boxes.push_back(player);
 	addChild(player);
 }
@@ -56,6 +56,8 @@ void BoxLayer::killPlayer() {
 			box->kill();
 		}
 	}
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
+		"boom.wav");
 }
 
 void BoxLayer::movePlayer(InputDirection direction){

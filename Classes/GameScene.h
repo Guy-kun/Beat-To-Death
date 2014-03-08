@@ -38,18 +38,21 @@ private:
 	//Simfile stuff
 	Simfile* currentSimfile;
 
-	void generateLevelPoints(int level);
+	void generateLevelPoints();
 
 	bool isInLeadIn;
 	float elapsedTime;
 	float currentBPM;
 
 	double currentBeatNoRaw;
+
 	double lastBeatFlashedOn;
+	double lastBeatDiedOn;
 
 	//FX
 	PulseLayer* pulseLayer;
 	float FLASH_BEATCOUNT;
+	float DEATH_BEATCOUNT;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

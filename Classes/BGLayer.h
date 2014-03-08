@@ -16,7 +16,7 @@ public:
 
 private:
 	CCSprite* bgImage;
-	CCSprite* bgOverlay;
+	CCSprite* goMarker;
 
 	int timeToCompleteMovement;
 	float timeElapsed;

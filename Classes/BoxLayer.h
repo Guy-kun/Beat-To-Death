@@ -4,6 +4,8 @@
 #include "cocos2d.h"
 #include "ABox.h"
 #include "Box2D\Box2D.h"
+#include "SimpleAudioEngine.h"  
+
 
 USING_NS_CC;
 

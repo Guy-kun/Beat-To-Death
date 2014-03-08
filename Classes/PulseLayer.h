@@ -13,10 +13,14 @@ public:
 	~PulseLayer(){};
 
 	void flashWhite(float timeToFadeAway);
+	void flashRed(float timeToFadeAway);
 	static cocos2d::Layer* layer();
 
 private:
-	CCLayerColor* whiteLayer;
+	CCSprite* bgOverlay;
+
+	CCLayerColor* redLayer;
+
 };
 
 #endif 
