@@ -2,7 +2,7 @@
 
 USING_NS_CC;
 
-#define PTM_RATIO 1
+#define PTM_RATIO 32
 
 bool BoxLayer::init()
 {
@@ -30,7 +30,7 @@ bool BoxLayer::init()
 	addChild(sampleBox);
 
 	ABox* sampleBox2 = new ABox(Player, _world);
-	sampleBox2->setPosition(ccp(200, 500));
+	sampleBox2->setPosition(ccp(200, 400));
 	boxes.push_back(sampleBox2);
 	addChild(sampleBox2);
 	
