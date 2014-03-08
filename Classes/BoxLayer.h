@@ -12,6 +12,7 @@ class BoxLayer : public cocos2d::Layer
 public:
 	CREATE_FUNC(BoxLayer);
 	virtual bool init();
+	void update(float delta)override;
 	~BoxLayer();
 
 	static cocos2d::Layer* layer();

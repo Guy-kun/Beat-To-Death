@@ -16,7 +16,7 @@ bool BoxLayer::init()
 
 	// box2d shit
 	b2Vec2 gravity;
-	gravity.Set(0.0f, 8.0f);
+	gravity.Set(0.0f, -8.0f);
 	boolean doSleep = true;
 	_world = new b2World(gravity);
 	_world->SetAllowSleeping(true);
@@ -30,33 +30,18 @@ bool BoxLayer::init()
 	groundShape.Set(b2Vec2(0, 0), b2Vec2(screenSize.width / PTM_RATIO, 0));
 	_groundBody->CreateFixture(&groundShape, 0);
 
-	ABox* sampleBox = new ABox(Static);
+	ABox* sampleBox = new ABox(Static,_world);
 	sampleBox->setPosition(ccp(100, 100));
 
 	boxes.push_back(sampleBox);
 	addChild(sampleBox);
-
-	b2BodyDef sampleBoxBodyDef;
-	sampleBoxBodyDef.type = b2_dynamicBody;
-	sampleBoxBodyDef.position.Set(100/PTM_RATIO, 100/PTM_RATIO);
-	sampleBoxBodyDef.userData = sampleBox;
-
-	b2Body* sampleBoxBody = _world->CreateBody(&sampleBoxBodyDef);
-
-	b2PolygonShape sampleBoxShape;
-	sampleBoxShape.SetAsBox(sampleBox->getContentSize().width / PTM_RATIO, 
-							sampleBox->getContentSize().height / PTM_RATIO);
-
-	b2FixtureDef sampleBoxShapeDef;
-	sampleBoxShapeDef.shape = &sampleBoxShape;
-	sampleBoxShapeDef.density = 10.0f;
-	sampleBoxShapeDef.friction = 0.4f;
-	sampleBoxShapeDef.restitution = 0.1f;
-	sampleBoxBody->CreateFixture(&sampleBoxShapeDef);
-
-
+	
+	scheduleUpdate();
 
 	return true;
+}
+void BoxLayer::update(float delta){
+	_world->Step(delta, 8, 1);
 }
 
 BoxLayer::~BoxLayer(){
