@@ -155,13 +155,20 @@ void BoxLayer::BeginContact(b2Contact *contact) {
 	ABox* box1 = static_cast<ABox*>(contact->GetFixtureA()->GetBody()->GetUserData());
 	ABox* box2 = static_cast<ABox*>(contact->GetFixtureB()->GetBody()->GetUserData());
 
-	if (box1->getType() == Player&& box2->getType() == Goal)
-	{
-		//Goal touched
-	}
-	else if (box1->getType() == Player&& box2->getType() == Kill)
+	for (int i = 0; i < 2; i++)
 	{
 
+		if (box1->getType() == Player&& box2->getType() == Goal)
+		{
+			//Goal touched
+		}
+		else if (box1->getType() == Player&& box2->getType() == Kill)
+		{
+
+		}
+		ABox* box3 = box2;
+		box2 = box1;
+		box1 = box3;
 	}
 }
 
