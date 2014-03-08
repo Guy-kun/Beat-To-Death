@@ -13,7 +13,7 @@ enum InputDirection{
 	UP, DOWN, LEFT, RIGHT, NONE
 };
 
-class BoxLayer : public cocos2d::Layer
+class BoxLayer : public cocos2d::Layer, public b2ContactListener
 {
 public:
 	CREATE_FUNC(BoxLayer);
@@ -32,7 +32,8 @@ public:
 
 	bool canPlayerBeKilled();
 
-
+	virtual void BeginContact(b2Contact *contact);
+	virtual void EndContact(b2Contact *contact);
 	static cocos2d::Layer* layer();
 
 private:

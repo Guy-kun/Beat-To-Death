@@ -15,7 +15,7 @@ bool BoxLayer::init()
 	_world = new b2World(gravity);
 	_world->SetAllowSleeping(true);
 	_world->SetContinuousPhysics(false);
-	
+	_world->SetContactListener(this);
 
 	/*
 	b2BodyDef groundBodyDef;
@@ -127,7 +127,7 @@ void BoxLayer::movePlayer(InputDirection direction){
 	ABox* player = getPlayer();
 	b2Vec2 vel = player->getBoxBody()->GetLinearVelocity();
 	if (direction == UP) {
-		if (abs(vel.y) < 0.2) {
+		if (abs(vel.y) == 0.0) {
 			vel.y = 15;//upwards - don't change x velocity
 			player->getBoxBody()->SetLinearVelocity(vel);
 		}
@@ -149,6 +149,25 @@ void BoxLayer::stopHorizontalMovement(){
 	ABox* player = getPlayer();
 	player->getBoxBody()->SetLinearVelocity(b2Vec2(0, player->getBoxBody()->GetLinearVelocity().y));
 }
+
+void BoxLayer::BeginContact(b2Contact *contact) {
+	ABox* box1 = static_cast<ABox*>(contact->GetFixtureA()->GetBody()->GetUserData());
+	ABox* box2 = static_cast<ABox*>(contact->GetFixtureB()->GetBody()->GetUserData());
+
+	if (box1->getType() == Player&& box2->getType() == Goal)
+	{
+		//Goal touched
+	}
+	else if (box1->getType() == Player&& box2->getType() == Kill)
+	{
+
+	}
+}
+
+void BoxLayer::EndContact(b2Contact *contact) {
+
+}
+
 
 BoxLayer::~BoxLayer(){
 	//TODO: remove all boxes
