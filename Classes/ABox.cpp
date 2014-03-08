@@ -33,9 +33,9 @@ ABox::ABox(BoxType t, b2World* world){
 					  getSprite()->getContentSize().height / PTM_RATIO / 2); // need to divide by 2 for some reason
 
 	boxShapeDef.shape = &boxShape;
-	boxShapeDef.density = 10.0f;
-	boxShapeDef.friction = 0.4f;
-	boxShapeDef.restitution = 0.1f;
+	boxShapeDef.density = 50.0f;
+	boxShapeDef.friction = 1.0f;
+	boxShapeDef.restitution = 0.0f;
 	boxBody->CreateFixture(&boxShapeDef);
 
 }

@@ -21,6 +21,8 @@ public:
 	void initFixedBoxes(std::vector<Point> points);
 	void update(float delta);
 	void movePlayer(InputDirection direction);
+	void spawnPlayer();
+	void killPlayer();
 
 	static cocos2d::Layer* layer();
 

@@ -21,7 +21,9 @@ public:
 
 	void kill();
 
-	CCSprite* getSprite(){ return sprite; };
+	CCSprite* getSprite() { return sprite; }
+	BoxType getType() { return type; }
+	b2Body* getBoxBody() { return boxBody; }
 private:
 	BoxType type;
 	Sprite* sprite;
