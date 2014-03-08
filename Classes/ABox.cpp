@@ -54,6 +54,15 @@ void ABox::visit(){
 	sprite->visit();
 }
 
+void ABox::kill() {
+	removeChild(sprite);
+	sprite = Sprite::create();
+	sprite->initWithFile("inactive.png");
+	addChild(sprite);
+
+	boxBody->SetType(b2_staticBody);
+}
+
 ABox::~ABox(){
 	//TODO: clear up body etc
 }

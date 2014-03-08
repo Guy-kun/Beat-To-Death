@@ -19,6 +19,8 @@ public:
 	void visit();
 	void setPosition(const Point &point) override;
 
+	void kill();
+
 	CCSprite* getSprite(){ return sprite; };
 private:
 	BoxType type;
