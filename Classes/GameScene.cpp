@@ -32,10 +32,12 @@ bool GameScene::init()
 
 
 	//Generate points for level 0
-	generateLevelPoints(0);
+	generateLevelPoints(1);
 
 	boxLayer = BoxLayer::create();
 	addChild(boxLayer);
+	boxLayer->initFixedBoxes(levelPoints);
+
     return true;
 }
 

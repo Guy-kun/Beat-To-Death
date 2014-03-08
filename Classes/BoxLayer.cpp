@@ -36,7 +36,13 @@ bool BoxLayer::init()
 }
 
 void BoxLayer::initFixedBoxes(std::vector<Point> points){
+	for (int i = 0; i < points.size(); i++) {
+		ABox* box = new ABox(Static, _world);
+		box->setPosition(points[i]);
 
+		boxes.push_back(box);
+		addChild(box);
+	}
 }
 void BoxLayer::update(float delta){
 	_world->Step(delta, 8, 1);
