@@ -17,7 +17,7 @@ bool BoxLayer::init()
 	_world->SetContinuousPhysics(false);
 	_world->SetContactListener(this);
 
-	/*
+	/* Ground stuff
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0, 0);
 
@@ -55,10 +55,11 @@ void BoxLayer::update(float delta){
 	if (playerPosition.y < 0) {
 		killPlayer(false);
 	}
-	else if ((playerPosition.y < goalPosition.y + 50) &&
-			 (playerPosition.y > goalPosition.y) &&
-		     (playerPosition.x > goalPosition.x)) {
-		// You win!
+	else if ((playerPosition.y < goalPosition.y+61) &&
+			 (playerPosition.y > goalPosition.y+51) &&
+		     (playerPosition.x > goalPosition.x-10) &&
+			 (playerPosition.x < goalPosition.x+61)) {
+		resetBodies();
 	}
 
 	if (!toDelete.empty()) {
