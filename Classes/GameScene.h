@@ -33,7 +33,7 @@ private:
 	//Box stuff
 	BoxLayer* boxLayer;
 	BGLayer* bgLayer;
-	std::vector<Point> levelPoints;
+	std::vector<std::pair<Point,BoxType>> levelPoints;
 
 	//Simfile stuff
 	Simfile* currentSimfile;
