@@ -6,6 +6,7 @@ USING_NS_CC;
 
 ABox::ABox(BoxType t, b2World* world){
 	type = t;
+	oldSprite = nullptr;
 
 	//TODO vary based on type
 	sprite = Sprite::create();
@@ -52,13 +53,24 @@ void ABox::visit(){
 	sprite->setAnchorPoint(getAnchorPoint());
 	sprite->setZOrder(getZOrder());
 	sprite->visit();
+	if (oldSprite != nullptr)
+	{
+		oldSprite->setPosition(getPosition());
+		oldSprite->setAnchorPoint(getAnchorPoint());
+		oldSprite->setZOrder(getZOrder());
+		oldSprite->visit();
+	}
 }
 
 void ABox::kill() {
-	removeChild(sprite);
+	oldSprite = sprite;
+
 	sprite = Sprite::create();
-	sprite->initWithFile("inactive.png");
+	sprite->initWithFile("dead.png");
 	addChild(sprite);
+
+	CCFadeOut* fade = CCFadeOut::create(0.2f);
+	oldSprite->runAction(fade);
 
 	boxBody->SetType(b2_staticBody);
 }

@@ -25,6 +25,9 @@ public:
 private:
 	BoxType type;
 	Sprite* sprite;
+	//Used for dying
+	Sprite* oldSprite;
+
 	// Body
 	b2BodyDef boxBodyDef;
 	b2Body* boxBody;

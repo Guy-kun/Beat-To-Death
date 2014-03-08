@@ -35,7 +35,7 @@ bool BoxLayer::init()
 	addChild(sampleBox2);
 	
 	scheduleUpdate();
-
+	sampleBox->kill();
 	return true;
 }
 
