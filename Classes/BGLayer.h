@@ -16,6 +16,8 @@ public:
 
 private:
 	CCSprite* bgImage;
+	CCSprite* bgOverlay;
+
 	int timeToCompleteMovement;
 	float timeElapsed;
 };

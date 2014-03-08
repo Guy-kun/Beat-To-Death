@@ -3,13 +3,19 @@
 
 
 bool BGLayer::init(){
-	timeToCompleteMovement = 5;
+	timeToCompleteMovement = 3;
 	timeElapsed = 0.0f;
 
 	bgImage = CCSprite::create();
 	bgImage->initWithFile("bg.png");
 	bgImage->setAnchorPoint(ccp(0, 0));
 	addChild(bgImage);
+
+	bgOverlay = CCSprite::create();
+	bgOverlay->initWithFile("bgOverlay.png");
+	bgOverlay->setAnchorPoint(ccp(0, 0));
+	bgOverlay->setOpacity(125);
+	addChild(bgOverlay);
 
 	scheduleUpdate();
 	return true;
