@@ -117,7 +117,9 @@ void GameScene::generateLevelPoints(){
 	srand(hash);
 
 	for (int i = 0; i < rand() % 8; i++){
+		int a = rand() % 3;
 
+		levelPoints.push_back(std::pair<Point, BoxType>(ccp(200+ (rand()%700), rand()%450), (a==0?Kill:Static)));
 	}
 
 	levelPoints.push_back(std::pair<Point, BoxType>(ccp(100, 100),Static));

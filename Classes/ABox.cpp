@@ -49,7 +49,7 @@ ABox::ABox(BoxType t, b2World* world){
 			boxBodyDef.type = b2_staticBody;
 		}
 		else if (type == Kill) {
-			sprite->initWithFile("dead.png");
+			sprite->initWithFile("kill.png");
 			boxBodyDef.type = b2_staticBody;
 		}
 
@@ -63,7 +63,7 @@ ABox::ABox(BoxType t, b2World* world){
 
 		boxShapeDef.shape = &boxShape;
 		boxShapeDef.density = 10.0f;
-		boxShapeDef.friction = 1.0f;
+		boxShapeDef.friction = 0.0f;
 		boxShapeDef.restitution = 0.0f;
 		boxBody->CreateFixture(&boxShapeDef);
 	}

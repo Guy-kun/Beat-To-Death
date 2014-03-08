@@ -6,6 +6,7 @@ USING_NS_CC;
 
 bool BoxLayer::init()
 {
+	killPlayerNextLoop = false;
 	Size screenSize = Director::getInstance()->getWinSize();
 
 	// box2d shit
@@ -51,6 +52,12 @@ void BoxLayer::update(float delta){
 	ABox* player = getPlayer();
 	Point playerPosition = player->getPosition();
 	Point goalPosition = getGoal()->getPosition();
+
+	if (killPlayerNextLoop)
+	{
+		killPlayer(true);
+		killPlayerNextLoop = false;
+	}
 
 	if (playerPosition.y < 0) {
 		killPlayer(false);
@@ -164,7 +171,7 @@ void BoxLayer::BeginContact(b2Contact *contact) {
 		}
 		else if (box1->getType() == Player&& box2->getType() == Kill)
 		{
-
+			killPlayerNextLoop = true;
 		}
 		ABox* box3 = box2;
 		box2 = box1;
