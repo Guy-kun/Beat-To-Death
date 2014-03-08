@@ -11,11 +11,13 @@ public:
 	CREATE_FUNC(BGLayer);
 	virtual bool init();
 	~BGLayer(){};
-
+	void update(float delta);
 	static cocos2d::Layer* layer();
 
 private:
 	CCSprite* bgImage;
+	int timeToCompleteMovement;
+	float timeElapsed;
 };
 
 #endif 

@@ -27,7 +27,6 @@ bool BoxLayer::init()
 	spawnPlayer();
 	
 	scheduleUpdate();
-	sampleBox->kill();
 	return true;
 }
 
