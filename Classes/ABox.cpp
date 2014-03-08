@@ -28,8 +28,8 @@ ABox::ABox(BoxType t, b2World* world){
 
 	boxBody = world->CreateBody(&boxBodyDef);
 	
-	boxShape.SetAsBox(getSprite()->getContentSize().width / PTM_RATIO,
-					  getSprite()->getContentSize().height / PTM_RATIO);
+	boxShape.SetAsBox(getSprite()->getContentSize().width / PTM_RATIO / 2,
+					  getSprite()->getContentSize().height / PTM_RATIO / 2); // need to divide by 2 for some reason
 
 	boxShapeDef.shape = &boxShape;
 	boxShapeDef.density = 10.0f;
