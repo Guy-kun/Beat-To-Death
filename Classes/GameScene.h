@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "BoxLayer.h"
+#include "Simfile.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -20,7 +21,14 @@ public:
 	CREATE_FUNC(GameScene);
 
 private:
+	//Box stuff
 	BoxLayer* boxLayer;
+	std::vector<Point> levelPoints;
+
+	//Simfile stuff
+	Simfile* currentSimfile;
+
+	void generateLevelPoints(int level);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

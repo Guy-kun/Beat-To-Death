@@ -20,9 +20,22 @@ Scene* GameScene::createScene()
 // on "init" you need to initialize your instance
 bool GameScene::init()
 {
+	String simfileToLoad = String("simfiles/[Tweety3187] Necrofantasia/Trance.sm");
+	currentSimfile = new Simfile(simfileToLoad);
+
+	//Generate points for level 0
+	generateLevelPoints(0);
+
 	boxLayer = BoxLayer::create();
 	addChild(boxLayer);
     return true;
+}
+
+void GameScene::generateLevelPoints(int level){
+	if (level == 1){
+		levelPoints.push_back(ccp(200,100));
+		levelPoints.push_back(ccp(400,100));
+	}
 }
 
 
