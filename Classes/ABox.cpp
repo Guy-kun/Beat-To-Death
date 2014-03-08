@@ -21,20 +21,15 @@ ABox::ABox(BoxType t, b2World* world){
 
 		boxBody = world->CreateBody(&boxBodyDef);
 
-		int n = 6;
-		float r = 1.6;
-		b2Vec2 coords[6];
-		for (int i = 0; i < n; i++) {
-			coords[i] = b2Vec2(r * cos(2 * M_PI * i / n), r * sin(2 * M_PI * i / n));
-		}
-		boxShape.Set(coords, 5);
+		boxShape.SetAsBox(getSprite()->getContentSize().width / PTM_RATIO / 2,
+			getSprite()->getContentSize().height / PTM_RATIO / 2); // need to divide by 2 for some reason
 
 		boxShapeDef.shape = &boxShape;
 		boxShapeDef.density = 10.0f;
 		boxShapeDef.friction = 1.0f;
 		boxShapeDef.restitution = 0.0f;
 		boxBody->CreateFixture(&boxShapeDef);
-
+		boxBody->SetFixedRotation(true);
 
 	}
 	else

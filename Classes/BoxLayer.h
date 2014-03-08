@@ -22,7 +22,10 @@ public:
 
 	void initFixedBoxes(std::vector<std::pair<Point, BoxType>> boxInput);
 	void update(float delta);
+	ABox* getPlayer();
+	ABox* getGoal();
 	void movePlayer(InputDirection direction);
+	void stopHorizontalMovement();
 	void spawnPlayer();
 	void killPlayer(bool newBody);
 	void resetBodies();
