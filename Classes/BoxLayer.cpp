@@ -44,9 +44,17 @@ void BoxLayer::initFixedBoxes(std::vector<Point> points){
 
 void BoxLayer::update(float delta){
 	_world->Step(delta, 8, 1);
+	
+	Point playerPosition = getPlayer()->getPosition();
+	Point goalPosition = getGoal()->getPosition();
 
-	if (getPlayer()->getPosition().y < 0) {
+	if (playerPosition.y < 0) {
 		killPlayer(false);
+	}
+	else if ((playerPosition.y < goalPosition.y + 50) &&
+			 (playerPosition.y > goalPosition.y) &&
+		     (playerPosition.x > goalPosition.x)) {
+		// You win!
 	}
 
 	if (!toDelete.empty()) {
@@ -61,6 +69,14 @@ void BoxLayer::update(float delta){
 ABox* BoxLayer::getPlayer() {
 	for (int i = boxes.size()-1; i >= 0; i--) {
 		if (boxes[i]->getType() == Player) {
+			return boxes[i];
+		}
+	}
+}
+
+ABox* BoxLayer::getGoal() {
+	for (int i = boxes.size() - 1; i >= 0; i--) {
+		if (boxes[i]->getType() == Goal) {
 			return boxes[i];
 		}
 	}
@@ -90,16 +106,17 @@ void BoxLayer::killPlayer(bool newBody) {
 	spawnPlayer();
 }
 bool BoxLayer::canPlayerBeKilled(){
-	for (int i = boxes.size() - 1; i >= 0; i--) {
-		ABox* player = boxes[i];
-		if (player->getType() == Player) {
-			return player->getBoxBody()->GetPosition().x * PTM_RATIO> 151;
-		}
-	}
+	return getPlayer()->getPosition().x > 151;
 }
 
 void BoxLayer::resetBodies(){
-
+	for (int i = boxes.size() - 1; i >= 0; i--) {
+		ABox* dead = boxes[i];
+		if (dead->getType() == Dead) {
+			toDelete.push_back(dead);
+			boxes.erase(boxes.begin() + i);
+		}
+	}
 }
 
 void BoxLayer::movePlayer(InputDirection direction){
