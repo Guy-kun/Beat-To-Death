@@ -30,6 +30,7 @@ bool GameScene::init()
 	currentSimfile = new Simfile(simfileToLoad);
 
 	currentBPM = currentSimfile->getBPMs()[0].second;
+	FLASH_BEATCOUNT = 4.0f /(currentBPM/ 180);
 	//Play music
 	std::stringstream ss;
 	ss << simfileDirectory.getCString() << currentSimfile->getMusicFileName().getCString();
@@ -40,7 +41,8 @@ bool GameScene::init()
 	//Generate points for level 0
 	generateLevelPoints(1);
 
-	
+	bgLayer = BGLayer::create();
+	addChild(bgLayer);
 	pulseLayer = PulseLayer::create();
 	addChild(pulseLayer);
 	boxLayer = BoxLayer::create();
@@ -62,8 +64,8 @@ void GameScene::update(float delta){
 	}
 	else
 	{
-		currentBeatNoRaw += 60000.0f / currentBPM * delta;
-
+		currentBeatNoRaw += currentBPM /60.0f  * delta;
+		CCLOG("CurrBeatRaw %f", currentBeatNoRaw);
 		//Beat number
 		double beatNo = floor(currentBeatNoRaw);
 		//Update BPM
@@ -73,11 +75,12 @@ void GameScene::update(float delta){
 			if (beatNo > p.first)
 			{
 				currentBPM = p.second;
+				FLASH_BEATCOUNT = 4.0f / (currentBPM / 180);
 				break;
 			}
 		}
 		//Flash
-		if (beatNo - lastBeatFlashedOn > FLASH_BEATCOUNT)
+		if (currentBeatNoRaw - lastBeatFlashedOn >= FLASH_BEATCOUNT)
 		{
 			lastBeatFlashedOn += FLASH_BEATCOUNT;
 			pulseLayer->flashWhite(0.5f);

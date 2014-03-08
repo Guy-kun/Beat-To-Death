@@ -6,8 +6,8 @@
 #include "Simfile.h"
 #include "SimpleAudioEngine.h"  
 #include "PulseLayer.h"
+#include "BGLayer.h"
 
-const int FLASH_BEATCOUNT = 120;
 
 class GameScene : public cocos2d::Layer
 {
@@ -28,6 +28,7 @@ public:
 private:
 	//Box stuff
 	BoxLayer* boxLayer;
+	BGLayer* bgLayer;
 	std::vector<Point> levelPoints;
 
 	//Simfile stuff
@@ -40,10 +41,11 @@ private:
 	float currentBPM;
 
 	double currentBeatNoRaw;
-	long lastBeatFlashedOn;
+	double lastBeatFlashedOn;
 
 	//FX
 	PulseLayer* pulseLayer;
+	float FLASH_BEATCOUNT;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

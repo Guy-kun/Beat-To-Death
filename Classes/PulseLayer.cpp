@@ -11,7 +11,7 @@ bool PulseLayer::init(){
 void PulseLayer::flashWhite(float timeToFadeAway){
 	whiteLayer->stopAllActions();
 
-	whiteLayer->setOpacity(0);
+	whiteLayer->setOpacity(255);
 	CCFadeOut* fadeOutAction = CCFadeOut::create(timeToFadeAway);
 	whiteLayer->runAction(fadeOutAction);
 }

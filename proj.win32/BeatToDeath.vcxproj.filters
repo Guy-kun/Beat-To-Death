@@ -51,6 +51,9 @@
     <ClCompile Include="..\Classes\PulseLayer.cpp">
       <Filter>Classes\FX</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\BGLayer.cpp">
+      <Filter>Classes\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PulseLayer.h">
       <Filter>Classes\FX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BGLayer.h">
+      <Filter>Classes\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
