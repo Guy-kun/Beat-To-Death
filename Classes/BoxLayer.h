@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "ABox.h"
+#include "Box2D\Box2D.h"
 
 USING_NS_CC;
 
@@ -17,6 +18,8 @@ public:
 
 private:
 	std::vector<ABox*> boxes;
+	b2World* _world;
+	b2Body* _groundBody;
 };
 
 #endif 

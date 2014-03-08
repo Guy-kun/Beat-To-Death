@@ -21,8 +21,10 @@
     <ClCompile Include="..\Classes\GameScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\BoxLayer.cpp" />
     <ClCompile Include="..\Classes\ABox.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BoxLayer.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
