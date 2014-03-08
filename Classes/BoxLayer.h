@@ -12,8 +12,10 @@ class BoxLayer : public cocos2d::Layer
 public:
 	CREATE_FUNC(BoxLayer);
 	virtual bool init();
-	void update(float delta)override;
 	~BoxLayer();
+
+	void initFixedBoxes(std::vector<Point> points);
+	void update(float delta);
 
 	static cocos2d::Layer* layer();
 

@@ -4,6 +4,8 @@
 #include "cocos2d.h"
 #include "BoxLayer.h"
 #include "Simfile.h"
+#include "SimpleAudioEngine.h"  
+
 
 class GameScene : public cocos2d::Layer
 {

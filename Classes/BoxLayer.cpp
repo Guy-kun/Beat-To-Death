@@ -4,12 +4,6 @@ USING_NS_CC;
 
 #define PTM_RATIO 32
 
-Layer* BoxLayer::layer()
-{
-	Layer *layer = Layer::create();
-	return layer;
-}
-
 bool BoxLayer::init()
 {
 	Size screenSize = Director::getInstance()->getWinSize();
@@ -39,6 +33,10 @@ bool BoxLayer::init()
 	scheduleUpdate();
 
 	return true;
+}
+
+void BoxLayer::initFixedBoxes(std::vector<Point> points){
+
 }
 void BoxLayer::update(float delta){
 	_world->Step(delta, 8, 1);

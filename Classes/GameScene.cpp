@@ -20,8 +20,16 @@ Scene* GameScene::createScene()
 // on "init" you need to initialize your instance
 bool GameScene::init()
 {
+	String simfileDirectory = String("simfiles/[Tweety3187] Necrofantasia/");
 	String simfileToLoad = String("simfiles/[Tweety3187] Necrofantasia/Trance.sm");
 	currentSimfile = new Simfile(simfileToLoad);
+	//Play music
+
+	std::stringstream ss;
+	ss << simfileDirectory.getCString() << currentSimfile->getMusicFileName().getCString();
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.5f);
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(ss.str().c_str());
+
 
 	//Generate points for level 0
 	generateLevelPoints(0);
