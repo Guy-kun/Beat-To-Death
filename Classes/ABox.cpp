@@ -9,18 +9,28 @@ ABox::ABox(BoxType t, b2World* world){
 
 	//TODO vary based on type
 	sprite = Sprite::create();
-	sprite->initWithFile("CloseNormal.png");
+	if (type == Static) {
+		sprite->initWithFile("inactive.png");
+		boxBodyDef.type = b2_staticBody;
+	}
+	else if (type == Player) {
+		sprite->initWithFile("player.png");
+		boxBodyDef.type = b2_dynamicBody;
+	}
+	else if (type == Dead) {
+		sprite->initWithFile("dead.png");
+		boxBodyDef.type = b2_staticBody;
+	}
 	addChild(sprite);
 
-	boxBodyDef.type = b2_dynamicBody;
+	
 	boxBodyDef.userData = this;
 
 	boxBody = world->CreateBody(&boxBodyDef);
 	
 	boxShape.SetAsBox(getSprite()->getContentSize().width / PTM_RATIO,
-		getSprite()->getContentSize().height / PTM_RATIO);
+					  getSprite()->getContentSize().height / PTM_RATIO);
 
-	
 	boxShapeDef.shape = &boxShape;
 	boxShapeDef.density = 10.0f;
 	boxShapeDef.friction = 0.4f;
