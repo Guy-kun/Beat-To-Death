@@ -32,10 +32,11 @@ bool BoxLayer::init()
 	return true;
 }
 
-void BoxLayer::initFixedBoxes(std::vector<Point> points){
-	for (int i = 0; i < points.size(); i++) {
-		ABox* box = new ABox(Static, _world);
-		box->setPosition(points[i]);
+void BoxLayer::initFixedBoxes(std::vector<std::pair<Point, BoxType>> boxInput){
+	for (int i = 0; i < boxInput.size(); i++) {
+		std::pair<Point, BoxType> p = boxInput[i];
+		ABox* box = new ABox(p.second, _world);
+		box->setPosition(p.first);
 
 		boxes.push_back(box);
 		addChild(box);

@@ -7,7 +7,7 @@
 USING_NS_CC;
 
 enum BoxType{
-	Player,Dead,Static
+	Player,Dead,Static,Goal,Kill
 };
 
 class ABox : public cocos2d::Node

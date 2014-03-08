@@ -116,8 +116,8 @@ void GameScene::generateLevelPoints(){
 	}
 	srand(hash);
 
-	levelPoints.push_back(ccp(100,100));
-	levelPoints.push_back(ccp(900,rand()%350));
+	levelPoints.push_back(std::pair<Point, BoxType>(ccp(100, 100),Static));
+	levelPoints.push_back(std::pair<Point, BoxType>(ccp(900, rand() % 350),Goal));
 }
 
 void GameScene::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event)

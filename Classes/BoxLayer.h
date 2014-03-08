@@ -20,7 +20,7 @@ public:
 	virtual bool init();
 	~BoxLayer();
 
-	void initFixedBoxes(std::vector<Point> points);
+	void initFixedBoxes(std::vector<std::pair<Point, BoxType>> boxInput);
 	void update(float delta);
 	ABox* getPlayer();
 	ABox* getGoal();

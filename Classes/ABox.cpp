@@ -23,6 +23,14 @@ ABox::ABox(BoxType t, b2World* world){
 		sprite->initWithFile("dead.png");
 		boxBodyDef.type = b2_staticBody;
 	}
+	else if (type == Goal) {
+		sprite->initWithFile("goal.png");
+		boxBodyDef.type = b2_staticBody;
+	}
+	else if (type == Kill) {
+		sprite->initWithFile("dead.png");
+		boxBodyDef.type = b2_staticBody;
+	}
 	addChild(sprite);
 
 	
