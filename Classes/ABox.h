@@ -24,10 +24,10 @@ private:
 	BoxType type;
 	Sprite* sprite;
 	// Body
-	b2BodyDef sampleBoxBodyDef;
-	b2Body* sampleBoxBody;
-	b2PolygonShape sampleBoxShape;
-	b2FixtureDef sampleBoxShapeDef;
+	b2BodyDef boxBodyDef;
+	b2Body* boxBody;
+	b2PolygonShape boxShape;
+	b2FixtureDef boxShapeDef;
 };
 
 #endif 
