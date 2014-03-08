@@ -52,6 +52,11 @@ bool GameScene::init()
 	scheduleUpdate();
 
 	boxLayer->initFixedBoxes(levelPoints);
+
+	auto keyboardListener = EventListenerKeyboard::create();
+	keyboardListener->onKeyPressed = CC_CALLBACK_2(GameScene::keyPressed, this);
+	keyboardListener->onKeyReleased = CC_CALLBACK_2(GameScene::keyReleased, this);
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
     return true;
 }
 
@@ -93,6 +98,32 @@ void GameScene::generateLevelPoints(int level){
 		levelPoints.push_back(ccp(200,100));
 		levelPoints.push_back(ccp(400,100));
 	}
+}
+
+void GameScene::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event)
+{
+	switch (keyCode)
+	{
+	case EventKeyboard::KeyCode::KEY_ESCAPE:
+		CCDirector::getInstance()->end();
+		break;
+	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+		boxLayer->movePlayer(RIGHT);
+		break;
+	case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+		boxLayer->movePlayer(LEFT);
+		break;
+	case EventKeyboard::KeyCode::KEY_UP_ARROW:
+		boxLayer->movePlayer(UP);
+		break;
+	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
+		boxLayer->movePlayer(DOWN);
+		break;
+	}
+}
+void GameScene::keyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event)
+{
+
 }
 
 

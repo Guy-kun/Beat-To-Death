@@ -51,6 +51,9 @@ void BoxLayer::initFixedBoxes(std::vector<Point> points){
 void BoxLayer::update(float delta){
 	_world->Step(delta, 8, 1);
 }
+void BoxLayer::movePlayer(InputDirection direction){
+
+}
 
 BoxLayer::~BoxLayer(){
 	//TODO: remove all boxes

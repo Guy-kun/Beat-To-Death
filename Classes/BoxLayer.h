@@ -7,6 +7,10 @@
 
 USING_NS_CC;
 
+enum InputDirection{
+	UP, DOWN, LEFT, RIGHT, NONE
+};
+
 class BoxLayer : public cocos2d::Layer
 {
 public:
@@ -16,6 +20,7 @@ public:
 
 	void initFixedBoxes(std::vector<Point> points);
 	void update(float delta);
+	void movePlayer(InputDirection direction);
 
 	static cocos2d::Layer* layer();
 
