@@ -1,5 +1,5 @@
-#ifndef __TILE_LAYER_H__
-#define __TILE_LAYER_H__
+#ifndef __BOX_LAYER_H__
+#define __BOX_LAYER_H__
 
 #include "cocos2d.h"
 #include "ABox.h"
