@@ -10,10 +10,12 @@ bool BoxLayer::init()
 
 	// box2d shit
 	b2Vec2 gravity;
-	gravity.Set(0.0f, -10.0f);
+	gravity.Set(0.0f, -30.0f);
 	boolean doSleep = true;
 	_world = new b2World(gravity);
 	_world->SetAllowSleeping(true);
+	_world->SetContinuousPhysics(false);
+	
 
 	/* Ground stuff
 	b2BodyDef groundBodyDef;
@@ -46,7 +48,8 @@ void BoxLayer::initFixedBoxes(std::vector<std::pair<Point, BoxType>> boxInput){
 void BoxLayer::update(float delta){
 	_world->Step(delta, 8, 1);
 	
-	Point playerPosition = getPlayer()->getPosition();
+	ABox* player = getPlayer();
+	Point playerPosition = player->getPosition();
 	Point goalPosition = getGoal()->getPosition();
 
 	if (playerPosition.y < 0) {
@@ -126,21 +129,26 @@ void BoxLayer::movePlayer(InputDirection direction){
 	b2Vec2 vel = player->getBoxBody()->GetLinearVelocity();
 	if (direction == UP) {
 		if (abs(vel.y) < 0.2) {
-			vel.y = 10;//upwards - don't change x velocity
+			vel.y = 15;//upwards - don't change x velocity
 			player->getBoxBody()->SetLinearVelocity(vel);
 		}
 	}
 	else if (direction == LEFT) {
-		vel.x = -5;
+		vel.x = -8;
 		player->getBoxBody()->SetLinearVelocity(vel);
 	}
 	else if (direction == RIGHT) {
-		vel.x = 5;
+		vel.x = 8;
 		player->getBoxBody()->SetLinearVelocity(vel);
 	}
 	else if (direction == DOWN) {
 		killPlayer(true);
 	}
+}
+
+void BoxLayer::stopHorizontalMovement(){
+	ABox* player = getPlayer();
+	player->getBoxBody()->SetLinearVelocity(b2Vec2(0, player->getBoxBody()->GetLinearVelocity().y));
 }
 
 BoxLayer::~BoxLayer(){

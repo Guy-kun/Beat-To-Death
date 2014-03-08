@@ -11,42 +11,62 @@ ABox::ABox(BoxType t, b2World* world){
 
 	//TODO vary based on type
 	sprite = Sprite::create();
-	if (type == Static) {
-		sprite->initWithFile("inactive.png");
-		boxBodyDef.type = b2_staticBody;
-	}
-	else if (type == Player) {
-		sprite->initWithFile("player.png");
-		boxBodyDef.type = b2_dynamicBody;
-	}
-	else if (type == Dead) {
-		sprite->initWithFile("dead.png");
-		boxBodyDef.type = b2_staticBody;
-	}
-	else if (type == Goal) {
-		sprite->initWithFile("goal.png");
-		boxBodyDef.type = b2_staticBody;
-	}
-	else if (type == Kill) {
-		sprite->initWithFile("dead.png");
-		boxBodyDef.type = b2_staticBody;
-	}
 	addChild(sprite);
 
-	
-	boxBodyDef.userData = this;
+	if (type == Player) {
+		sprite->initWithFile("player.png");
+		boxBodyDef.type = b2_dynamicBody;
 
-	boxBody = world->CreateBody(&boxBodyDef);
-	
-	boxShape.SetAsBox(getSprite()->getContentSize().width / PTM_RATIO / 2,
-					  getSprite()->getContentSize().height / PTM_RATIO / 2); // need to divide by 2 for some reason
+		boxBodyDef.userData = this;
 
-	boxShapeDef.shape = &boxShape;
-	boxShapeDef.density = 10.0f;
-	boxShapeDef.friction = 1.0f;
-	boxShapeDef.restitution = 0.0f;
-	boxBody->CreateFixture(&boxShapeDef);
+		boxBody = world->CreateBody(&boxBodyDef);
 
+		boxShape.SetAsBox(getSprite()->getContentSize().width / PTM_RATIO / 2,
+			getSprite()->getContentSize().height / PTM_RATIO / 2); // need to divide by 2 for some reason
+
+		boxShapeDef.shape = &boxShape;
+		boxShapeDef.density = 10.0f;
+		boxShapeDef.friction = 1.0f;
+		boxShapeDef.restitution = 0.0f;
+		boxBody->CreateFixture(&boxShapeDef);
+		boxBody->SetFixedRotation(true);
+
+	}
+	else
+	{
+
+		if (type == Static) {
+			sprite->initWithFile("inactive.png");
+			boxBodyDef.type = b2_staticBody;
+		}
+
+		else if (type == Dead) {
+			sprite->initWithFile("dead.png");
+			boxBodyDef.type = b2_staticBody;
+		}
+		else if (type == Goal) {
+			sprite->initWithFile("goal.png");
+			boxBodyDef.type = b2_staticBody;
+		}
+		else if (type == Kill) {
+			sprite->initWithFile("dead.png");
+			boxBodyDef.type = b2_staticBody;
+		}
+
+
+		boxBodyDef.userData = this;
+
+		boxBody = world->CreateBody(&boxBodyDef);
+
+		boxShape.SetAsBox(getSprite()->getContentSize().width / PTM_RATIO / 2,
+			getSprite()->getContentSize().height / PTM_RATIO / 2); // need to divide by 2 for some reason
+
+		boxShapeDef.shape = &boxShape;
+		boxShapeDef.density = 10.0f;
+		boxShapeDef.friction = 1.0f;
+		boxShapeDef.restitution = 0.0f;
+		boxBody->CreateFixture(&boxShapeDef);
+	}
 }
 
 void ABox::setPosition(const Point &point){

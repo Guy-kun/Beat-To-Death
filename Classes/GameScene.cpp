@@ -146,7 +146,15 @@ void GameScene::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Eve
 }
 void GameScene::keyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event)
 {
-
+	switch (keyCode)
+	{
+	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+		boxLayer->stopHorizontalMovement();
+		break;
+	case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+		boxLayer->stopHorizontalMovement();
+		break;
+	}
 }
 
 
