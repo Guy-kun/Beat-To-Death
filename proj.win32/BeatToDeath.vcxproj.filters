@@ -10,19 +10,37 @@
     <Filter Include="resource">
       <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Boxes">
+      <UniqueIdentifier>{16ae2d5b-0c81-4481-ba92-c65e188e1611}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Core">
+      <UniqueIdentifier>{8bba1e98-2431-400c-8260-4552eabc7c51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Simfile">
+      <UniqueIdentifier>{5ba4f74b-6d57-4b10-ae94-27cc9110d483}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ABox.cpp">
+      <Filter>Classes\Boxes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BoxLayer.cpp">
+      <Filter>Classes\Boxes</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\GameScene.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ABox.cpp">
-      <Filter>Classes</Filter>
+    <ClCompile Include="..\Classes\Simfile.cpp">
+      <Filter>Classes\Simfile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\FileReader.cpp">
+      <Filter>Classes\Simfile</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\BoxLayer.cpp">
       <Filter>Classes</Filter>
@@ -32,17 +50,23 @@
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\GameScene.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ABox.h">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Boxes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\BoxLayer.h">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Boxes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>Classes\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>Classes\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Simfile.h">
+      <Filter>Classes\Simfile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\FileReader.h">
+      <Filter>Classes\Simfile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
