@@ -25,6 +25,10 @@ public:
 	void movePlayer(InputDirection direction);
 	void spawnPlayer();
 	void killPlayer(bool newBody);
+	void resetBodies();
+
+	bool canPlayerBeKilled();
+
 
 	static cocos2d::Layer* layer();
 

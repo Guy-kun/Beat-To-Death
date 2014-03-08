@@ -81,12 +81,21 @@ void BoxLayer::killPlayer(bool newBody) {
 			}
 		}
 	}
-<<<<<<< HEAD
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
 		"boom.wav");
-=======
 	spawnPlayer();
->>>>>>> 7aeee2f2c33ec7f5d261f09588d693749332b5c4
+}
+bool BoxLayer::canPlayerBeKilled(){
+	for (int i = boxes.size() - 1; i >= 0; i--) {
+		ABox* player = boxes[i];
+		if (player->getType() == Player) {
+			return player->getBoxBody()->GetPosition().x * PTM_RATIO> 151;
+		}
+	}
+}
+
+void BoxLayer::resetBodies(){
+
 }
 
 void BoxLayer::movePlayer(InputDirection direction){

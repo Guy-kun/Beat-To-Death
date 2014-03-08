@@ -97,9 +97,11 @@ void GameScene::update(float delta){
 		if(currentBeatNoRaw - lastBeatDiedOn >= DEATH_BEATCOUNT)
 		{
 			lastBeatDiedOn += DEATH_BEATCOUNT;
-			boxLayer->killPlayer();
-			pulseLayer->flashRed(0.5f);
-
+			if (boxLayer->canPlayerBeKilled())
+			{
+				boxLayer->killPlayer(true);
+				pulseLayer->flashRed(0.5f);
+			}
 		}
 	}
 }
@@ -136,6 +138,9 @@ void GameScene::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Eve
 		break;
 	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 		boxLayer->movePlayer(DOWN);
+		break;
+	case EventKeyboard::KeyCode::KEY_SPACE:
+		boxLayer->resetBodies();
 		break;
 	}
 }
