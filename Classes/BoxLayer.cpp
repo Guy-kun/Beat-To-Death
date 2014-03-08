@@ -10,7 +10,7 @@ bool BoxLayer::init()
 
 	// box2d shit
 	b2Vec2 gravity;
-	gravity.Set(0.0f, -8.0f);
+	gravity.Set(0.0f, -10.0f);
 	boolean doSleep = true;
 	_world = new b2World(gravity);
 	_world->SetAllowSleeping(true);
@@ -24,15 +24,7 @@ bool BoxLayer::init()
 	groundShape.Set(b2Vec2(0, 0), b2Vec2(screenSize.width / PTM_RATIO, 0));
 	_groundBody->CreateFixture(&groundShape, 0);
 
-	ABox* sampleBox = new ABox(Player,_world);
-	sampleBox->setPosition(ccp(100, 100));
-	boxes.push_back(sampleBox);
-	addChild(sampleBox);
-
-	ABox* sampleBox2 = new ABox(Player, _world);
-	sampleBox2->setPosition(ccp(200, 400));
-	boxes.push_back(sampleBox2);
-	addChild(sampleBox2);
+	spawnPlayer();
 	
 	scheduleUpdate();
 
@@ -51,8 +43,45 @@ void BoxLayer::initFixedBoxes(std::vector<Point> points){
 void BoxLayer::update(float delta){
 	_world->Step(delta, 8, 1);
 }
-void BoxLayer::movePlayer(InputDirection direction){
 
+void BoxLayer::spawnPlayer() {
+	ABox* player = new ABox(Player, _world);
+	player->setPosition(ccp(200, 400));
+	boxes.push_back(player);
+	addChild(player);
+}
+
+void BoxLayer::killPlayer() {
+	for (ABox* box : boxes) {
+		if (box->getType() == Player) {
+			box->kill();
+		}
+	}
+}
+
+void BoxLayer::movePlayer(InputDirection direction){
+	for (ABox* player : boxes) {
+		if (player->getType() == Player) {
+			b2Vec2 vel = player->getBoxBody()->GetLinearVelocity();
+			if (direction == UP) {
+				if (abs(vel.y) < 0.1) {
+					vel.y = 10;//upwards - don't change x velocity
+					player->getBoxBody()->SetLinearVelocity(vel);
+				}
+			}
+			else if (direction == LEFT) {
+				vel.x = -5;
+				player->getBoxBody()->SetLinearVelocity(vel);
+			}
+			else if (direction == RIGHT) {
+				vel.x = 5;
+				player->getBoxBody()->SetLinearVelocity(vel);
+			}
+			else if (direction == DOWN) {
+				killPlayer();
+			}
+		}
+	}
 }
 
 BoxLayer::~BoxLayer(){
