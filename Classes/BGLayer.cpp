@@ -11,11 +11,11 @@ bool BGLayer::init(){
 	bgImage->setAnchorPoint(ccp(0, 0));
 	addChild(bgImage);
 
-	bgOverlay = CCSprite::create();
-	bgOverlay->initWithFile("bgOverlay.png");
-	bgOverlay->setAnchorPoint(ccp(0, 0));
-	bgOverlay->setOpacity(125);
-	addChild(bgOverlay);
+	goMarker = CCSprite::create();
+	goMarker->initWithFile("goMarker.png");
+	goMarker->setAnchorPoint(ccp(0, 0));
+	goMarker->setPosition(ccp(151, 0));
+	addChild(goMarker);
 
 	scheduleUpdate();
 	return true;

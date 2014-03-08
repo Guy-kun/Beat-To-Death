@@ -24,22 +24,24 @@ bool GameScene::init()
 	elapsedTime = 0.0f;
 	currentBeatNoRaw = 0.0f;
 	lastBeatFlashedOn = 0;
+	lastBeatDiedOn = 0;
 
 	String simfileDirectory = String("simfiles/[Tweety3187] Necrofantasia/");
 	String simfileToLoad = String("simfiles/[Tweety3187] Necrofantasia/Trance.sm");
 	currentSimfile = new Simfile(simfileToLoad);
 
 	currentBPM = currentSimfile->getBPMs()[0].second;
-	FLASH_BEATCOUNT = 4.0f /(currentBPM/ 180);
+	FLASH_BEATCOUNT = 2.0f /(currentBPM/180);
+	DEATH_BEATCOUNT = FLASH_BEATCOUNT * 6;
 	//Play music
 	std::stringstream ss;
 	ss << simfileDirectory.getCString() << currentSimfile->getMusicFileName().getCString();
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.5f);
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(ss.str().c_str());
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.1);
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(ss.str().c_str());
 
 
 	//Generate points for level 0
-	generateLevelPoints(1);
+	generateLevelPoints();
 
 	bgLayer = BGLayer::create();
 	addChild(bgLayer);
@@ -80,7 +82,8 @@ void GameScene::update(float delta){
 			if (beatNo > p.first)
 			{
 				currentBPM = p.second;
-				FLASH_BEATCOUNT = 4.0f / (currentBPM / 180);
+				FLASH_BEATCOUNT = 2.0f / (currentBPM / 180);
+				DEATH_BEATCOUNT = FLASH_BEATCOUNT * 6;
 				break;
 			}
 		}
@@ -90,14 +93,31 @@ void GameScene::update(float delta){
 			lastBeatFlashedOn += FLASH_BEATCOUNT;
 			pulseLayer->flashWhite(0.5f);
 		}
+		//Death
+		if(currentBeatNoRaw - lastBeatDiedOn >= DEATH_BEATCOUNT)
+		{
+			lastBeatDiedOn += DEATH_BEATCOUNT;
+			if (boxLayer->canPlayerBeKilled())
+			{
+				boxLayer->killPlayer(true);
+				pulseLayer->flashRed(0.5f);
+			}
+		}
 	}
 }
 
-void GameScene::generateLevelPoints(int level){
-	if (level == 1){
-		levelPoints.push_back(ccp(200,100));
-		levelPoints.push_back(ccp(400,100));
+
+void GameScene::generateLevelPoints(){
+	int hash = 0;
+	int offset = 'a' - 1;
+	std::string s = string(currentSimfile->getFullTitle().getCString());
+	for (string::const_iterator it = s.begin(); it != s.end(); ++it) {
+		hash = hash << 1 | (*it - offset);
 	}
+	srand(hash);
+
+	levelPoints.push_back(ccp(100,100));
+	levelPoints.push_back(ccp(900,rand()%350));
 }
 
 void GameScene::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event)
@@ -118,6 +138,9 @@ void GameScene::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Eve
 		break;
 	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 		boxLayer->movePlayer(DOWN);
+		break;
+	case EventKeyboard::KeyCode::KEY_SPACE:
+		boxLayer->resetBodies();
 		break;
 	}
 }

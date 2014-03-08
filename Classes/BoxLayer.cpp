@@ -68,7 +68,7 @@ ABox* BoxLayer::getPlayer() {
 
 void BoxLayer::spawnPlayer() {
 	ABox* player = new ABox(Player, _world);
-	player->setPosition(ccp(200, 400));
+	player->setPosition(ccp(100, 150));
 	boxes.push_back(player);
 	addChild(player);
 }
@@ -85,7 +85,21 @@ void BoxLayer::killPlayer(bool newBody) {
 			}
 		}
 	}
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
+		"boom.wav");
 	spawnPlayer();
+}
+bool BoxLayer::canPlayerBeKilled(){
+	for (int i = boxes.size() - 1; i >= 0; i--) {
+		ABox* player = boxes[i];
+		if (player->getType() == Player) {
+			return player->getBoxBody()->GetPosition().x * PTM_RATIO> 151;
+		}
+	}
+}
+
+void BoxLayer::resetBodies(){
+
 }
 
 void BoxLayer::movePlayer(InputDirection direction){
