@@ -19,6 +19,9 @@
     <Filter Include="Classes\Simfile">
       <UniqueIdentifier>{5ba4f74b-6d57-4b10-ae94-27cc9110d483}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\FX">
+      <UniqueIdentifier>{caa7b728-1a8e-443f-ad69-4ca80392f67c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,6 +48,9 @@
     <ClCompile Include="..\Classes\BoxLayer.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PulseLayer.cpp">
+      <Filter>Classes\FX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -67,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\FileReader.h">
       <Filter>Classes\Simfile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PulseLayer.h">
+      <Filter>Classes\FX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

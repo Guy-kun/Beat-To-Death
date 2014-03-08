@@ -5,7 +5,9 @@
 #include "BoxLayer.h"
 #include "Simfile.h"
 #include "SimpleAudioEngine.h"  
+#include "PulseLayer.h"
 
+const int FLASH_BEATCOUNT = 120;
 
 class GameScene : public cocos2d::Layer
 {
@@ -15,6 +17,7 @@ public:
 
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();  
+	void update(float delta);
     
     // a selector callback
     void menuCloseCallback(Object* pSender);
@@ -31,6 +34,16 @@ private:
 	Simfile* currentSimfile;
 
 	void generateLevelPoints(int level);
+
+	bool isInLeadIn;
+	float elapsedTime;
+	float currentBPM;
+
+	double currentBeatNoRaw;
+	long lastBeatFlashedOn;
+
+	//FX
+	PulseLayer* pulseLayer;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
