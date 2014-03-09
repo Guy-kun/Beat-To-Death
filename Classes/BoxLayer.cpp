@@ -7,6 +7,7 @@ USING_NS_CC;
 bool BoxLayer::init()
 {
 	killPlayerNextLoop = false;
+	canJump = false;
 	Size screenSize = Director::getInstance()->getWinSize();
 
 	// box2d shit
@@ -62,12 +63,6 @@ void BoxLayer::update(float delta){
 	if (playerPosition.y < 0) {
 		killPlayer(false);
 	}
-	else if ((playerPosition.y < goalPosition.y+61) &&
-			 (playerPosition.y > goalPosition.y+51) &&
-		     (playerPosition.x > goalPosition.x-10) &&
-			 (playerPosition.x < goalPosition.x+61)) {
-		resetBodies();
-	}
 
 	if (!toDelete.empty()) {
 		for (int i = toDelete.size() - 1; i >= 0; i--) {
@@ -95,6 +90,7 @@ ABox* BoxLayer::getGoal() {
 }
 
 void BoxLayer::spawnPlayer() {
+	canJump = true;
 	ABox* player = new ABox(Player, _world);
 	player->setPosition(ccp(100, 150));
 	boxes.push_back(player);
@@ -135,7 +131,8 @@ void BoxLayer::movePlayer(InputDirection direction){
 	ABox* player = getPlayer();
 	b2Vec2 vel = player->getBoxBody()->GetLinearVelocity();
 	if (direction == UP) {
-		if (abs(vel.y) == 0.0) {
+		if (canJump) {
+			canJump = false;
 			vel.y = 15;//upwards - don't change x velocity
 			player->getBoxBody()->SetLinearVelocity(vel);
 		}
@@ -162,14 +159,18 @@ void BoxLayer::BeginContact(b2Contact *contact) {
 	ABox* box1 = static_cast<ABox*>(contact->GetFixtureA()->GetBody()->GetUserData());
 	ABox* box2 = static_cast<ABox*>(contact->GetFixtureB()->GetBody()->GetUserData());
 
+	b2Body* test1 = static_cast<b2Body*>(contact->GetFixtureA()->GetUserData());
+	b2Body* test2 = static_cast<b2Body*>(contact->GetFixtureB()->GetUserData());
 	for (int i = 0; i < 2; i++)
 	{
-
-		if (box1->getType() == Player&& box2->getType() == Goal)
-		{
-			//Goal touched
+		if (test1 != nullptr || test2 != nullptr) {
+			canJump = true;
 		}
-		else if (box1->getType() == Player&& box2->getType() == Kill)
+		if (box1->getType() == Player && box2->getType() == Goal)
+		{
+			resetBodies();
+		}
+		else if (box1->getType() == Player && box2->getType() == Kill)
 		{
 			killPlayerNextLoop = true;
 		}

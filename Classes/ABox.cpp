@@ -15,14 +15,18 @@ ABox::ABox(BoxType t, b2World* world){
 
 	if (type == Player) {
 		sprite->initWithFile("player.png");
+		Size screenSize = Director::getInstance()->getWinSize();
 		boxBodyDef.type = b2_dynamicBody;
+		boxBodyDef.position.Set(100,100);
+		boxBodyDef.angle = 0;
 
 		boxBodyDef.userData = this;
 
 		boxBody = world->CreateBody(&boxBodyDef);
 
 		boxShape.SetAsBox(getSprite()->getContentSize().width / PTM_RATIO / 2,
-			getSprite()->getContentSize().height / PTM_RATIO / 2); // need to divide by 2 for some reason
+						  getSprite()->getContentSize().height / PTM_RATIO / 2,
+						  b2Vec2(0.85, 0.85), 0); // need to divide by 2 for some reason
 
 		boxShapeDef.shape = &boxShape;
 		boxShapeDef.density = 10.0f;
@@ -31,10 +35,16 @@ ABox::ABox(BoxType t, b2World* world){
 		boxBody->CreateFixture(&boxShapeDef);
 		boxBody->SetFixedRotation(true);
 
+		// Create sensor thing
+		boxShape.SetAsBox((getSprite()->getContentSize().width*0.8) / PTM_RATIO / 2,
+						  0.5 / PTM_RATIO / 2,
+						  b2Vec2(0.85, -0.15), 0);
+		boxShapeDef.isSensor = true;
+		boxShapeDef.userData = boxBody;
+		b2Fixture* footSensorFixture = boxBody->CreateFixture(&boxShapeDef);
 	}
 	else
 	{
-
 		if (type == Static) {
 			sprite->initWithFile("inactive.png");
 			boxBodyDef.type = b2_staticBody;
@@ -53,13 +63,13 @@ ABox::ABox(BoxType t, b2World* world){
 			boxBodyDef.type = b2_staticBody;
 		}
 
-
 		boxBodyDef.userData = this;
 
 		boxBody = world->CreateBody(&boxBodyDef);
 
 		boxShape.SetAsBox(getSprite()->getContentSize().width / PTM_RATIO / 2,
-			getSprite()->getContentSize().height / PTM_RATIO / 2); // need to divide by 2 for some reason
+						  getSprite()->getContentSize().height / PTM_RATIO / 2,
+						  b2Vec2(0.85, 0.85), 0); // need to divide by 2 for some reason
 
 		boxShapeDef.shape = &boxShape;
 		boxShapeDef.density = 10.0f;
@@ -71,7 +81,7 @@ ABox::ABox(BoxType t, b2World* world){
 
 void ABox::setPosition(const Point &point){
 	Node::setPosition(point);
-	boxBody->SetTransform(b2Vec2(point.x / PTM_RATIO, point.y / PTM_RATIO),0);
+	boxBody->SetTransform(b2Vec2(point.x / PTM_RATIO, point.y / PTM_RATIO), 0);
 }
 
 
