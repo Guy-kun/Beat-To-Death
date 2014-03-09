@@ -169,7 +169,13 @@ void BoxLayer::BeginContact(b2Contact *contact) {
 		}
 		if (box1->getType() == Player && box2->getType() == Goal)
 		{
-			resetBodies();
+			//resetBodies();
+			Size winSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+			CCSprite* s = CCSprite::create();
+			s->initWithFile("youwin.png");
+			s->setScale(0.8);
+			s->setPosition(ccp(winSize.width / 2, winSize.height / 2));
+			addChild(s);
 		}
 		else if (box1->getType() == Player && box2->getType() == Kill)
 		{
