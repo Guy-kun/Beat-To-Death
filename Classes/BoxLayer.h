@@ -43,6 +43,7 @@ private:
 	std::vector<ABox*> toDelete;
 
 	bool killPlayerNextLoop;
+	bool canJump;
 };
 
 #endif 
