@@ -29,7 +29,7 @@ bool GameScene::init()
 
 	timeBar = CCLayerColor::create(ccc4(227, 55, 55, 200), 1000, 20);
 	timeBar->setAnchorPoint(ccp(0, 1));
-	timeBar->setPosition(ccp(-500, 495));
+	timeBar->setPosition(ccp(-1000, 495));
 	addChild(timeBar);
 
 	survivalMultiplier = 2;
