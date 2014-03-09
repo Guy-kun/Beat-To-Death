@@ -83,7 +83,7 @@ bool StartScene::init()
 }
 
 void StartScene::startGameWithDir(string dir){
-	Scene* game = GameScene::createScene();
+	Scene* game = GameScene::createScene(dir);
 	CCDirector::sharedDirector()->replaceScene(CCTransitionCrossFade::create(0.5, game));
 }
 

@@ -1,14 +1,16 @@
 #include "GameScene.h"
-
+#include <atlstr.h>
+#include <atlconv.h>
 USING_NS_CC;
 
-Scene* GameScene::createScene()
+Scene* GameScene::createScene(string dir)
 {
     // 'scene' is an autorelease object
     auto scene = Scene::create();
     
     // 'layer' is an autorelease object
 	auto layer = GameScene::create();
+	layer->load(dir);
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -38,22 +40,7 @@ bool GameScene::init()
 	lastBeatDiedOn = 0;
 	hueVal = 0;
 
-	String simfileDirectory = String("simfiles/[Tweety3187] Necrofantasia/");
-	String simfileToLoad = String("simfiles/[Tweety3187] Necrofantasia/Trance.sm");
-	currentSimfile = new Simfile(simfileToLoad);
-
-	currentBPM = currentSimfile->getBPMs()[0].second;
-	FLASH_BEATCOUNT = 2.0f /(currentBPM/180);
-	DEATH_BEATCOUNT = FLASH_BEATCOUNT * 3 *survivalMultiplier;
-	//Play music
-	std::stringstream ss;
-	ss << simfileDirectory.getCString() << currentSimfile->getMusicFileName().getCString();
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(ss.str().c_str());
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.3f);
-
-
-	//Generate points for level 0
-	generateLevelPoints();
+	
 
 	bgLayer = BGLayer::create();
 	addChild(bgLayer);
@@ -65,7 +52,7 @@ bool GameScene::init()
 
 	scheduleUpdate();
 
-	boxLayer->initFixedBoxes(levelPoints);
+	
 
 	auto keyboardListener = EventListenerKeyboard::create();
 	keyboardListener->onKeyPressed = CC_CALLBACK_2(GameScene::keyPressed, this);
@@ -86,6 +73,71 @@ bool GameScene::init()
 	CCShaderCache::sharedShaderCache()->addProgram(prog, "defaultProgram");
 	rTex->getSprite()->setShaderProgram(prog);
     return true;
+}
+
+vector<wstring> get_all_files_within_folder(wstring simfiledir)
+{
+	vector<wstring> names;
+	wchar_t search_path[200];
+	wchar_t curr_path[256];
+	_wgetcwd(curr_path, 255);
+
+	wsprintf(search_path, L"%s\\simfiles\\%s\\*", curr_path, simfiledir.c_str());
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = ::FindFirstFile(search_path, &fd);
+	if (hFind != INVALID_HANDLE_VALUE)
+	{
+		do
+		{
+			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+			{
+				names.push_back(fd.cFileName);
+			}
+		} while (::FindNextFile(hFind, &fd));
+		::FindClose(hFind);
+	}
+	return names;
+}
+
+void GameScene::load(string simfileDir){
+	stringstream sss;
+	sss << "simfiles/" << simfileDir.c_str();
+	String simfileDirectory = String(sss.str().c_str());
+	String simfileToLoad = string("");
+	//Find .sm
+	std::wstring ws;
+	ws.assign(simfileDir.begin(), simfileDir.end());
+	vector<wstring> filesInDir = get_all_files_within_folder(ws);
+
+	for (int i = 0; i < filesInDir.size(); i++){
+		wstring dir = filesInDir[i];
+		string dirStr = CW2A(dir.c_str());
+		if (dirStr.substr(dirStr.find_last_of(".") + 1) == "sm") {
+			stringstream ssss; // We getting long now
+			ssss << "simfiles/" << simfileDir.c_str() << "/" << dirStr.c_str();
+			simfileToLoad = String(ssss.str().c_str());
+		}
+	}
+
+	if (simfileToLoad.length() == 0)
+	{
+		CCLOG("NO .sm FILE IN DIRECTORY, GO AWAY");
+	}
+
+	currentSimfile = new Simfile(simfileToLoad);
+
+	currentBPM = currentSimfile->getBPMs()[0].second;
+	FLASH_BEATCOUNT = 2.0f / (currentBPM / 180);
+	DEATH_BEATCOUNT = FLASH_BEATCOUNT * 3 * survivalMultiplier;
+	//Play music
+	std::stringstream ss;
+	ss << simfileDirectory.getCString() << currentSimfile->getMusicFileName().getCString();
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(ss.str().c_str());
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.3f);
+
+	generateLevelPoints();
+
+	boxLayer->initFixedBoxes(levelPoints);
 }
 
 void GameScene::update(float delta){
