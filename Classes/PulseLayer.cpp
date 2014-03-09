@@ -26,6 +26,6 @@ void PulseLayer::flashRed(float timeToFadeAway){
 	redLayer->stopAllActions();
 
 	redLayer->setOpacity(255);
-	CCFadeOut* fadeOutAction = CCFadeOut::create(timeToFadeAway);
+	CCFadeOut* fadeOutAction = CCFadeOut::create(timeToFadeAway*2);
 	redLayer->runAction(fadeOutAction);
 }

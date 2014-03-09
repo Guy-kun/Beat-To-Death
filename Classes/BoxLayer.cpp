@@ -18,7 +18,8 @@ bool BoxLayer::init()
 	_world->SetAllowSleeping(true);
 	_world->SetContinuousPhysics(false);
 	_world->SetContactListener(this);
-	addChild(B2DebugDrawLayer::create(_world, PTM_RATIO), 9999);
+	//addChild(B2DebugDrawLayer::create(_world, PTM_RATIO), 9999);
+
 	/* Ground stuff
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0, 0);
