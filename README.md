@@ -1,4 +1,4 @@
-Beat to Death (A.K.A. Seizure Inducer 2K4)
+Beat to Death (Seizure Inducer 2K4)
 ===
 A hackathon project by Anton Prydatko & Andrew Li
 
