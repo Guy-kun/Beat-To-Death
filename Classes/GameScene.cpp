@@ -44,7 +44,7 @@ bool GameScene::init()
 
 	currentBPM = currentSimfile->getBPMs()[0].second;
 	FLASH_BEATCOUNT = 2.0f /(currentBPM/180);
-	DEATH_BEATCOUNT = FLASH_BEATCOUNT * 6 *survivalMultiplier;
+	DEATH_BEATCOUNT = FLASH_BEATCOUNT * 3 *survivalMultiplier;
 	//Play music
 	std::stringstream ss;
 	ss << simfileDirectory.getCString() << currentSimfile->getMusicFileName().getCString();
@@ -116,8 +116,8 @@ void GameScene::update(float delta){
 			if (beatNo > p.first)
 			{
 				currentBPM = p.second;
-				FLASH_BEATCOUNT = 1.0f / (currentBPM / 180);
-				DEATH_BEATCOUNT = FLASH_BEATCOUNT * 6 * survivalMultiplier;
+				FLASH_BEATCOUNT = 2.0f / (currentBPM / 180);
+				DEATH_BEATCOUNT = FLASH_BEATCOUNT * 3 * survivalMultiplier;
 				break;
 			}
 		}
