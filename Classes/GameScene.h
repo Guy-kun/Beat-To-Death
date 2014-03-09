@@ -36,6 +36,9 @@ private:
 	GLuint hueUniformLocation;
 	RenderTexture* rTex;
 
+	//Timer
+	CCLayerColor* timeBar;
+
 	//Box stuff
 	BoxLayer* boxLayer;
 	BGLayer* bgLayer;

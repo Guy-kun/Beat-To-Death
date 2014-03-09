@@ -25,6 +25,11 @@ bool GameScene::init()
 	rTex->setPosition(ccp(winSize.width / 2, winSize.height / 2));
 	rTex->retain();
 
+	timeBar = CCLayerColor::create(ccc4(227, 55, 55, 200), 1000, 20);
+	timeBar->setAnchorPoint(ccp(0, 1));
+	timeBar->setPosition(ccp(-500, 495));
+	addChild(timeBar);
+
 	survivalMultiplier = 2;
 	isInLeadIn = true;
 	elapsedTime = 0.0f;
@@ -111,7 +116,7 @@ void GameScene::update(float delta){
 			if (beatNo > p.first)
 			{
 				currentBPM = p.second;
-				FLASH_BEATCOUNT = 2.0f / (currentBPM / 180);
+				FLASH_BEATCOUNT = 1.0f / (currentBPM / 180);
 				DEATH_BEATCOUNT = FLASH_BEATCOUNT * 6 * survivalMultiplier;
 				break;
 			}
@@ -132,6 +137,7 @@ void GameScene::update(float delta){
 				pulseLayer->flashRed(0.5f);
 			}
 		}
+		timeBar->setPosition(ccp(-1000 + (1000 * ((currentBeatNoRaw - lastBeatDiedOn)/DEATH_BEATCOUNT)), timeBar->getPositionY()));
 		
 	}
 }
@@ -196,9 +202,11 @@ void GameScene::visit(){
 	rTex->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
 	bgLayer->visit();
 	pulseLayer->visit();
+	timeBar->visit();
 	rTex->end();
 	rTex->visit();
 	glUniform1f(hueUniformLocation, (float)hueVal/100);
+
 	boxLayer->visit();
 
 }
