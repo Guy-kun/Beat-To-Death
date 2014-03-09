@@ -13,7 +13,11 @@ public:
 	~Simfile();
 
 	float getOffset(){ return offset; };
-	String getFullTitle(){ return "blah"; };
+	String getFullTitle(){
+		std::stringstream ss;
+		ss << title.getCString() << " : " << artist.getCString();
+		return ss.str().c_str();
+	};
 	String getMusicFileName(){ return musicFilename; };
 	std::vector<std::pair<long, float>> getBPMs(){ return BPMs; };
 

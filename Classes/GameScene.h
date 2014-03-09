@@ -19,6 +19,7 @@ public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();  
 	void update(float delta);
+	void visit();
     
     // a selector callback
     void menuCloseCallback(Object* pSender);
@@ -30,6 +31,11 @@ public:
 	void keyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
 
 private:
+	int survivalMultiplier;
+	int hueVal;
+	GLuint hueUniformLocation;
+	RenderTexture* rTex;
+
 	//Box stuff
 	BoxLayer* boxLayer;
 	BGLayer* bgLayer;
@@ -55,4 +61,4 @@ private:
 	float DEATH_BEATCOUNT;
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+#endif

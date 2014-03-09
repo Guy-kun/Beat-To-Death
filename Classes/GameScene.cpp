@@ -20,11 +20,18 @@ Scene* GameScene::createScene()
 // on "init" you need to initialize your instance
 bool GameScene::init()
 {
+	Size winSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+	rTex = RenderTexture::create(winSize.width, winSize.height);
+	rTex->setPosition(ccp(winSize.width / 2, winSize.height / 2));
+	rTex->retain();
+
+	survivalMultiplier = 2;
 	isInLeadIn = true;
 	elapsedTime = 0.0f;
 	currentBeatNoRaw = 0.0f;
 	lastBeatFlashedOn = 0;
 	lastBeatDiedOn = 0;
+	hueVal = 0;
 
 	String simfileDirectory = String("simfiles/[Tweety3187] Necrofantasia/");
 	String simfileToLoad = String("simfiles/[Tweety3187] Necrofantasia/Trance.sm");
@@ -32,7 +39,7 @@ bool GameScene::init()
 
 	currentBPM = currentSimfile->getBPMs()[0].second;
 	FLASH_BEATCOUNT = 2.0f /(currentBPM/180);
-	DEATH_BEATCOUNT = FLASH_BEATCOUNT * 6;
+	DEATH_BEATCOUNT = FLASH_BEATCOUNT * 6 *survivalMultiplier;
 	//Play music
 	std::stringstream ss;
 	ss << simfileDirectory.getCString() << currentSimfile->getMusicFileName().getCString();
@@ -59,6 +66,20 @@ bool GameScene::init()
 	keyboardListener->onKeyPressed = CC_CALLBACK_2(GameScene::keyPressed, this);
 	keyboardListener->onKeyReleased = CC_CALLBACK_2(GameScene::keyReleased, this);
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
+
+	//Load shader
+	GLProgram* prog = new GLProgram();
+	prog->initWithVertexShaderFilename("default.vert", "default.frag");
+	//Cocos2dx attribs
+	prog->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+	prog->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
+	prog->link();
+	prog->updateUniforms();
+
+	hueUniformLocation = glGetUniformLocation(prog->getProgram(), "hueAdjust");
+
+	CCShaderCache::sharedShaderCache()->addProgram(prog, "defaultProgram");
+	rTex->getSprite()->setShaderProgram(prog);
     return true;
 }
 
@@ -72,9 +93,17 @@ void GameScene::update(float delta){
 	else
 	{
 		currentBeatNoRaw += currentBPM /60.0f  * delta;
-		CCLOG("CurrBeatRaw %f", currentBeatNoRaw);
 		//Beat number
 		double beatNo = floor(currentBeatNoRaw);
+
+		int b = (int)beatNo % 100;
+		if (b > 50)
+			hueVal += 1;
+		else
+			hueVal -= 1;
+		CCLOG("Hueval %d", hueVal);
+
+
 		//Update BPM
 		for (int i = currentSimfile->getBPMs().size() - 1; i >= 0; i--)
 		{
@@ -83,7 +112,7 @@ void GameScene::update(float delta){
 			{
 				currentBPM = p.second;
 				FLASH_BEATCOUNT = 2.0f / (currentBPM / 180);
-				DEATH_BEATCOUNT = FLASH_BEATCOUNT * 6;
+				DEATH_BEATCOUNT = FLASH_BEATCOUNT * 6 * survivalMultiplier;
 				break;
 			}
 		}
@@ -103,6 +132,7 @@ void GameScene::update(float delta){
 				pulseLayer->flashRed(0.5f);
 			}
 		}
+		
 	}
 }
 
@@ -162,7 +192,16 @@ void GameScene::keyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Ev
 		break;
 	}
 }
+void GameScene::visit(){
+	rTex->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
+	bgLayer->visit();
+	pulseLayer->visit();
+	rTex->end();
+	rTex->visit();
+	glUniform1f(hueUniformLocation, (float)hueVal/100);
+	boxLayer->visit();
 
+}
 
 void GameScene::menuCloseCallback(Object* pSender)
 {
