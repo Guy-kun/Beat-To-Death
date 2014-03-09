@@ -131,7 +131,7 @@ void GameScene::load(string simfileDir){
 	DEATH_BEATCOUNT = FLASH_BEATCOUNT * 3 * survivalMultiplier;
 	//Play music
 	std::stringstream ss;
-	ss << simfileDirectory.getCString() << currentSimfile->getMusicFileName().getCString();
+	ss << simfileDirectory.getCString() << "/" <<  currentSimfile->getMusicFileName().getCString();
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(ss.str().c_str());
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.3f);
 
@@ -158,7 +158,7 @@ void GameScene::update(float delta){
 			hueVal += 1;
 		else
 			hueVal -= 1;
-		CCLOG("Hueval %d", hueVal);
+		//CCLOG("Hueval %d", hueVal);
 
 
 		//Update BPM

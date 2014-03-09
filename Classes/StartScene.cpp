@@ -59,19 +59,24 @@ bool StartScene::init()
 		wstring dir = beatmapDirs[i];
 		string dirStr = CW2A(dir.c_str());
 
-		stringstream ss;
-		ss << std::to_string(count).c_str() << ". " << dirStr;
+
 		//Ignore
 		if (!(lstrcmpW(dir.c_str(), L".") == 0 || lstrcmpW(dir.c_str(), L"..") == 0))
 		{
 			dirs.push_back(dirStr);
-			CCLabelTTF* ttf1 = CCLabelTTF::create(ss.str().c_str(), "Arial Bold", 24,
-				CCSizeMake(1000, 40), kCCTextAlignmentCenter);
-			//ttf1->setColor(ccc3(55, 175, 220));
-			ttf1->setPosition(ccp(500, 50 + (100 * i)));
-			ttf1->getTexture()->setAntiAliasTexParameters();
-			addChild(ttf1);
 		}
+	}
+	for (int i = 0; i < min((int)dirs.size(),4); i++){
+		string s = dirs[i];
+		stringstream ss;
+		ss << std::to_string(i+1).c_str() << ". " << s;
+
+		CCLabelTTF* ttf1 = CCLabelTTF::create(ss.str().c_str(), "Arial Bold", 24,
+			CCSizeMake(1000, 40), kCCTextAlignmentCenter);
+		//ttf1->setColor(ccc3(55, 175, 220));
+		ttf1->setPosition(ccp(500, 240 - (40 * i)));
+		ttf1->getTexture()->setAntiAliasTexParameters();
+		addChild(ttf1);
 	}
 
 	auto keyboardListener = EventListenerKeyboard::create();
@@ -91,6 +96,7 @@ void StartScene::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Ev
 {
 	switch (keyCode)
 	{
+		//Copy paste? Never heard of it.
 	case EventKeyboard::KeyCode::KEY_ESCAPE:
 		CCDirector::getInstance()->end();
 		break;
@@ -105,6 +111,14 @@ void StartScene::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Ev
 	case EventKeyboard::KeyCode::KEY_3:
 		if (dirs.size() > 2)
 			startGameWithDir(dirs[2]);
+		break;
+	case EventKeyboard::KeyCode::KEY_4:
+		if (dirs.size() > 3)
+			startGameWithDir(dirs[3]);
+		break;
+	case EventKeyboard::KeyCode::KEY_5:
+		if (dirs.size() > 4)
+			startGameWithDir(dirs[4]);
 		break;
 	}
 }
