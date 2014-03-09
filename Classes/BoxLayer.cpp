@@ -181,7 +181,14 @@ void BoxLayer::BeginContact(b2Contact *contact) {
 }
 
 void BoxLayer::EndContact(b2Contact *contact) {
-
+	b2Body* test1 = static_cast<b2Body*>(contact->GetFixtureA()->GetUserData());
+	b2Body* test2 = static_cast<b2Body*>(contact->GetFixtureB()->GetUserData());
+	for (int i = 0; i < 2; i++)
+	{
+		if (test1 != nullptr || test2 != nullptr) {
+			canJump = false;
+		}
+	}
 }
 
 

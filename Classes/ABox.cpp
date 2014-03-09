@@ -30,7 +30,7 @@ ABox::ABox(BoxType t, b2World* world){
 
 		boxShapeDef.shape = &boxShape;
 		boxShapeDef.density = 10.0f;
-		boxShapeDef.friction = 1.0f;
+		boxShapeDef.friction = 0.0f;
 		boxShapeDef.restitution = 0.0f;
 		boxBody->CreateFixture(&boxShapeDef);
 		boxBody->SetFixedRotation(true);
