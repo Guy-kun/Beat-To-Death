@@ -145,6 +145,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\GLES-Render.cpp" />
     <ClCompile Include="..\Classes\PulseLayer.cpp" />
     <ClCompile Include="..\Classes\Simfile.cpp" />
+    <ClCompile Include="..\Classes\StartScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +159,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\GLES-Render.h" />
     <ClInclude Include="..\Classes\PulseLayer.h" />
     <ClInclude Include="..\Classes\Simfile.h" />
+    <ClInclude Include="..\Classes\StartScene.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
